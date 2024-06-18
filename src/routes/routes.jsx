@@ -42,7 +42,7 @@ import { Navigate } from 'react-router-dom';
 
 // const About = lazy(() => import('@/pages/About'));
 
-const Landing = lazy(() => import('@/pages/Landing'));
+const Landing = lazy(() => import('@/pages/Landing/'));
 
 let routes = {
   expense: [],

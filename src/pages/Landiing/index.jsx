@@ -1,6 +1,6 @@
 import React from 'react'
 
-const index = () => {
+const Landing = () => {
   return (
     <div>
       <h1>Landiing</h1>
@@ -8,4 +8,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Landing;
