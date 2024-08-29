@@ -16,7 +16,7 @@ function useAppContext() {
   if (context === undefined) {
     throw new Error('useAppContext must be used within a AppContextProvider');
   }
-  const [state, dispatch] = context;
+  const [state, dispatch] = context;W
   const appContextAction = contextActions(dispatch);
   // const appContextSelector = contextSelectors(state);
   return { state, appContextAction };

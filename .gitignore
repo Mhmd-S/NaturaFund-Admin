@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+vite-end.d.ts
+
+./src/.vscode
+./src/modules/*
+
 public
 
 .env

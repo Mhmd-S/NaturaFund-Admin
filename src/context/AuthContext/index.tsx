@@ -17,9 +17,9 @@ function useAuthContext() {
     throw new Error('useAuthContext must be used within a AuthContextProvider');
   }
   const [state, dispatch] = context;
-  const appContextAction = contextActions(dispatch);
+  const authContextAction = contextActions(dispatch);
   // const appContextSelector = contextSelectors(state);
-  return { state, appContextAction };
+  return { state, authContextAction };
 }
 
 export { AuthContextProvider, useAuthContext };
