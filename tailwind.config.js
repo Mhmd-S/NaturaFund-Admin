@@ -1,8 +1,26 @@
 /** @type {import('tailwindcss').Config} */
+
+import forms from '@tailwindcss/forms';
+
 export default {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
+			colors: {
+				brand: {
+					50: '#F7F6FE',
+					100: '#EBE7FD',
+					200: '#DCD5FB',
+					300: '#C8BDFA',
+					400: '#B9AAF8',
+					500: '#A593F6',
+					600: '#9580F4',
+					700: '#8268F2',
+					800: '#7256F1',
+					900: '#603FEF',
+					950: '#240C8D',
+				},
+			},
 			gridTemplateRows: {
 				settingsLargeScreen: 'repeat(6, 40%)',
 				settingsSmallScreen: 'repeat(6, 25%)',
@@ -11,10 +29,15 @@ export default {
 				Inter: ['Inter', 'sans-serif'],
 				'8bit': ['"Press Start 2P"', 'cursive'],
 			},
-			colors: {
-				'my-orange': '#F76301',
-			},
 			keyframes: {
+				carasol_indicator: {
+					'0%': { width: '0' },
+					'100%': { width: 'full' },
+				},
+				carasol_indicator_desktop: {
+					'0%': { height: '0' },
+					'100%': { height: 'full' },
+				},
 				wave: {
 					'0%': { transform: 'rotate(0.0deg)' },
 					'10%': { transform: 'rotate(14.0deg)' },
@@ -29,7 +52,7 @@ export default {
 					'0%': { transform: 'scale(0.9)' },
 					'100%': { transform: 'scale(1)' },
 				},
-				likeAndDislike:{
+				likeAndDislike: {
 					'0%': { transform: 'translateY(200%)', opacity: '0' },
 					'20%': { transform: 'translateY(0%)', opacity: '1' },
 					'40%': { transform: 'translateY(0%)', opacity: '1' },
@@ -59,18 +82,26 @@ export default {
 						border: '2px solid rgb(239, 68, 68)',
 					},
 				},
+				RotatingDisplay: {
+					'0%': { transform: 'translateX(100%)' },
+					'100%': { transform: 'translateX(-100%)' },
+				},
 			},
 			backgroundSize: {
 				'300%': '300%',
 			},
 			animation: {
 				gradient: 'animatedgradient 6s ease infinite alternate',
-				fadeIn: 'fadeIn 200ms ease-in forwards', 
+				fadeIn: 'fadeIn 200ms ease-in forwards',
 				fadeOut: 'fadeOut 200ms ease-out forwards',
 				whiteWash: 'whiteWash 100ms ease-in forwards',
 				likeAndDislike: 'likeAndDislike 600ms ease-in forwards',
+				carasol_indicator: 'carasol_indicator 5s ease forwards',
+				carasol_indicator_desktop:
+					'carasol_indicator_desktop 5s ease forwards',
+				rotatingDisplay: 'RotatingDisplay 25s linear infinite',
 			},
 		},
 	},
-	plugins: [],
+	plugins: [forms],
 };
