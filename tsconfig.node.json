@@ -4,9 +4,9 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"allowSyntheticDefaultImports": true,
+		"baseUrl": "src",
 		"paths": {
-			"*": ["./src/*"],
-			"@/*": ["./src/*"]
+			"@/*": ["./*"]
 		}
 	},
 	"include": ["vite.config.ts"]
