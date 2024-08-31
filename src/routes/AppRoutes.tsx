@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Projects = lazy(() => import('@/pages/Projects'));
+const Project = lazy(() => import('@/pages/Projects/project'));
 
 let routes = {
   expense: [],
@@ -10,6 +11,10 @@ let routes = {
     {
       path: '/projects',
       element: <Projects />,
+    },
+    {
+      path: '/projects/:id',
+      elemement: <Project />,
     },
     {
       path: '/kyc',

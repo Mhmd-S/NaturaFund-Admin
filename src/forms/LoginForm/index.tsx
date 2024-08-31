@@ -1,6 +1,6 @@
-import FormField from '@/forms/formComponents/FormField';
-import FormButton from '@/forms/formComponents/FormButton';
-import FormWrapper from '@/forms/formComponents/FormWrapper';
+import FormField from '@/forms/FormComponents/FormField';
+import FormButton from '@/forms/FormComponents/FormButton';
+import FormWrapper from '@/forms/FormComponents/FormWrapper';
 import useLoginForm from '@/forms/LoginForm/useLoginForm';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 const LoginForm = ({ setLoginType }) => {
   const { register, handleSubmit, onSubmit, loading, errors } = useLoginForm();
-  console.log(errors);
+
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
       <FormField
