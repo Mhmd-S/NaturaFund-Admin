@@ -9,12 +9,16 @@ let routes = {
   expense: [],
   default: [
     {
+      path: '/',
+      element: <Projects />,
+    },
+    {
       path: '/projects',
       element: <Projects />,
     },
     {
       path: '/projects/:id',
-      elemement: <Project />,
+      element: <Project />,
     },
     {
       path: '/kyc',

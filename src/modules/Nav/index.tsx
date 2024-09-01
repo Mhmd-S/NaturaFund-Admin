@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom';
-import NavItem from './NavItem';
+
+import NavItem from '@/modules/Nav/NavItem';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
@@ -90,13 +92,13 @@ const Nav = () => {
       <div className="px-4">
         <ul className="mt-6 space-y-1">
           {MENU_ITEMS.map((item) => {
-            return <NavItem item={item} location={location} />;
+            return <NavItem item={item} location={location} key={item.name} />;
           })}
         </ul>
       </div>
 
       <div className="p-4 flex justify-between items-center seperate-x-4 inset-x-0 bottom-0 border-t border-gray-100">
-        <div href="#" className="flex items-center gap-2 bg-white">
+        <div className="flex items-center gap-2 bg-white">
           <img
             alt=""
             src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"

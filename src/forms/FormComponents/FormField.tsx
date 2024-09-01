@@ -21,7 +21,6 @@ const FormField = ({
 
       <input
         type={type}
-        name={name}
         defaultValue={defaultValue}
         placeholder={placeholder}
         {...register(name, validationRules)}

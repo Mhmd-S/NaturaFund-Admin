@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import DetailsTable from '@/components/common/DetailsTable';
-import FormWrapper from '@/forms/formComponents/FormWrapper';
+import FormWrapper from '@/forms/FormComponents/FormWrapper';
 import FormTextArea from '@/forms/FormComponents/FormTextArea';
 import FileUploadField from '@/forms/FormComponents/FormFileUpload';
 import FormField from '@/forms/FormComponents/FormField';
+import { FormFieldEnum } from '@/types/FormFieldProps';
 
 const Overview = () => {
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ const Overview = () => {
       {/* Image */}
       <FormField
         name="projectName"
-        type="text"
+        type={FormFieldEnum.Text}
         defaultValue={project.projectName}
         label="Project Name"
         register={register}
