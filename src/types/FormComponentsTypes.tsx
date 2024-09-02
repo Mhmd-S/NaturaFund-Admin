@@ -1,4 +1,13 @@
-import { UseFormRegister, FieldValues, FieldErrors, UseFormResetField, UseFormSetError } from 'react-hook-form';
+import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
+import {
+  UseFormRegister,
+  FieldValues,
+  FieldErrors,
+  UseFormResetField,
+  UseFormSetError,
+  Control,
+  UseFieldArrayRemove,
+} from 'react-hook-form';
 
 interface FormComponentProps {
   label: string;
@@ -45,5 +54,27 @@ export interface FormFileUploadProps extends FormComponentProps {
   inputGuidelines: string;
   resetField: UseFormResetField<FieldValues>;
   setError: UseFormSetError<FieldValues>;
+}
 
+export interface TableFormProps {
+  title?: string;
+  control: Control;
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors;
+}
+
+export interface TableFieldProps {
+  fieldArrayName: string;
+  errors: FieldErrors;
+  register: UseFormRegister<FieldValues>;
+  removeField: UseFieldArrayRemove;
+}
+
+export interface FormButtonProps {
+  text: string;
+  loading?: boolean;
+  disable?: boolean;
+  type: 'button' | 'submit';
+  icon?: FontAwesomeIconProps['icon'];
+  onClick?: () => void;
 }
