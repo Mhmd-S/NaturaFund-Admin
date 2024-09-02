@@ -6,6 +6,7 @@ import FormTextArea from '@/forms/FormComponents/FormTextArea';
 import FileUploadField from '@/forms/FormComponents/FormFileUpload';
 import FormField from '@/forms/FormComponents/FormField';
 import { FormFieldEnum } from '@/types/FormComponentsTypes';
+import FormButton from '@/forms/FormComponents/FormButton';
 
 const Overview = () => {
   const [loading, setLoading] = useState(false);
@@ -122,11 +123,12 @@ const Overview = () => {
           required: 'Project image is required',
         }}
       />
-      <div className="w-1/2">
+      <div className="w-1/2 mb-4">
         <h2 className="text-3xl py-4 font-semibold">Company Info</h2>
         {/* ToDo: Add hyperlink that takes you to the company tab to edit */}
         <DetailsTable items={getCompanyDetails()} />
       </div>
+      <FormButton text="Save Changes" />
     </FormWrapper>
   );
 };

@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type EmptyStateProps = {
   title: string;
-  description: string;
+  description?: string;
   icon: IconProp;
   buttonLabel?: string;
   handleClick?: () => void;
