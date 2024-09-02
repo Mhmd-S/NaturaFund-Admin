@@ -11,7 +11,7 @@ const FormWrapper = ({ children, onSubmit, loading }) => {
             ) : (
                 <form
                     onSubmit={onSubmit}
-                    className="w-full h-full flex flex-col items-center"
+                    className="w-full h-full flex flex-col"
                 >
                     {children}
                 </form>

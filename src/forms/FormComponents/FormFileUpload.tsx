@@ -89,22 +89,24 @@ const FileUploadField = ({
         } ${file ? 'border-solid' : 'border-dashed'}`}
       >
         {file ? (
-          <div className="w-full grid grid-cols-2 grid-rows-2 items-center gap-3">
-            <div className="size-full row-span-2">{renderIcon()}</div>
-            <div className="flex flex-col">
-              <text className="text-sm">{file.name}</text>
-              <text className="text-xs text-gray-400">{convertStorageSize(file.size)}</text>
-            </div>
-            <div className="flex justify-center items-center gap-2 text-gray-300">
-              <FontAwesomeIcon
-                icon={faCloudDownloadAlt}
-                className="p-1 size-5 cursor-pointer rounded-ful"
-              />
+          <div className="w-full grid grid-cols-2 grid-rows-1 gap-x-2">
+            <div className="size-full row-span-2 items-center">{renderIcon()}</div>
+            <div className="h-full grid grid-cols-1">
               <FontAwesomeIcon
                 icon={faTrashAlt}
-                className="p-1 size-5 cursor-pointer"
+                className="justify-self-end p-1 size-5 cursor-pointer text-brand-200 rounded-full"
                 onClick={() => handleRemoveFile()}
               />
+              <div className='flex flex-col items-center'>
+                <p className="text-md">{file.name}</p>
+                <button className="flex items-center">
+                  <p className="text-sm text-gray-400">{convertStorageSize(file.size)}</p>
+                  <FontAwesomeIcon
+                    icon={faCloudDownloadAlt}
+                    className="p-1 size-5 cursor-pointer rounded-ful text-brand-600"
+                  />
+                </button>
+              </div>
             </div>
           </div>
         ) : (
