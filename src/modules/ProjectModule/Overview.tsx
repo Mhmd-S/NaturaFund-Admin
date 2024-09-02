@@ -74,11 +74,14 @@ const Overview = () => {
         errors={errors}
         placeholder="ex. This project aims to..."
         validationRules={{
-          required: 'Address is required',
-          pattern: {
-            value: /^\d+,\s?[A-Za-z\s]+(?:,\s?[A-Za-z\s]+)*,\s?\d{5}\s?[A-Za-z\s]+,\s?[A-Za-z\s]+$/,
-            message:
-              'The address should include: street number, street name, region, and town/city, state.',
+          required: 'Description is required',
+          minLength: {
+            value: 100,
+            message: 'Description must be at least 100 characters long',
+          },
+          maxLength: {
+            value: 500,
+            message: 'Description must be less than 500 characters long',
           },
         }}
       />
@@ -92,11 +95,14 @@ const Overview = () => {
         errors={errors}
         placeholder="ex. Lorem Inc. was founded in 1947..."
         validationRules={{
-          required: 'Address is required',
-          pattern: {
-            value: /^\d+,\s?[A-Za-z\s]+(?:,\s?[A-Za-z\s]+)*,\s?\d{5}\s?[A-Za-z\s]+,\s?[A-Za-z\s]+$/,
-            message:
-              'The address should include: street number, street name, region, and town/city, state.',
+          required: 'Company introduction is required',
+          minLength: {
+            value: 100,
+            message: 'Company introduction must be at least 100 characters long',
+          },
+          maxLength: {
+            value: 500,
+            message: 'Company introduction must be less than 500 characters long',
           },
         }}
       />
@@ -118,6 +124,7 @@ const Overview = () => {
       />
       <div className="w-1/2">
         <h2 className="text-3xl py-4 font-semibold">Company Info</h2>
+        {/* ToDo: Add hyperlink that takes you to the company tab to edit */}
         <DetailsTable items={getCompanyDetails()} />
       </div>
     </FormWrapper>

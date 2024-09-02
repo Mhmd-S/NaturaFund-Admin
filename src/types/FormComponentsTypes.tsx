@@ -24,8 +24,8 @@ export enum FormFieldEnum {
 
 export interface FormFieldProps extends FormComponentProps {
   type: FormFieldEnum;
-  defaultValue: string;
-  placeholder: string;
+  defaultValue?: string;
+  placeholder?: string;
 }
 
 export interface FormSelectProps extends FormComponentProps {
