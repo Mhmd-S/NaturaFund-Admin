@@ -1,6 +1,6 @@
 import React from 'react';
 import FormFieldError from '@/forms/FormComponents/FormFieldError';
-import { FormFieldProps } from '@/types/FormFieldProps';
+import { FormFieldProps } from '@/types/FormComponentsTypes';
 
 const FormField = ({
   label,
@@ -11,7 +11,6 @@ const FormField = ({
   validationRules,
   defaultValue,
   placeholder,
-  ...inputProps
 }: FormFieldProps) => {
   return (
     <div className="w-full flex flex-col">
@@ -24,7 +23,6 @@ const FormField = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         {...register(name, validationRules)}
-        {...inputProps}
         className={`block w-full rounded-sm p-2 py-3 text-gray-900 outline-none border-[1px] border-gray-300 placeholder:text-gray-400  focus:border-brand-800  sm:text-sm sm:leading-6' ${errors[name] && ' border-pink-800 active:border-3'}`}
       />
 

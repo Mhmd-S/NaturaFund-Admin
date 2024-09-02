@@ -1,6 +1,8 @@
 import React from "react";
 import FormFieldError from "./FormFieldError";
 
+import { FormTextAreaProps } from "@/types/FormComponentsTypes"
+
 const FormFieldTextArea = ({
     errors,
     label,
@@ -10,7 +12,7 @@ const FormFieldTextArea = ({
     defaultValue,
     placeholder,
     ...inputProps
-}) => {
+}: FormTextAreaProps) => {
     return (
         <div className="w-full flex flex-col">
             <label htmlFor={name} className="block mb-2 text-sm font-medium leading-6 text-gray-900">
@@ -18,7 +20,6 @@ const FormFieldTextArea = ({
             </label>
 
             <textarea
-                name={name}
                 defaultValue={defaultValue}
                 placeholder={placeholder}
                 {...register(name, validationRules)}
