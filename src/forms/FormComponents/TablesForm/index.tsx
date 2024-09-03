@@ -1,28 +1,32 @@
-import { useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { set, useFieldArray, useForm } from 'react-hook-form';
 
 import { faMehRollingEyes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { FormFieldEnum } from '@/types/FormComponentsTypes';
+import { FormFieldEnum, TableFormProps } from '@/types/FormComponentsTypes';
 
 import FormField from '@/forms/FormComponents/FormField';
 import FormButton from '@/forms/FormComponents/FormButton';
-
 import EmptyState from '@/components/common/EmptyState';
-import TableField from './TableField';
-import FormWrapper from '../FormWrapper';
+import FormWrapper from '@/forms/FormComponents/FormWrapper';
 
-const TableForm = ({ title }) => {
+import TableField from '@/forms/FormComponents/TablesForm/TableField';
+
+const TableForm = ({ name, defaultValues }: TableFormProps) => {
+  const [loading, setLoading] = useState(true);
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues,
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'table',
+    name,
     rules: {
       required: 'Please add at least 1 item',
     },
@@ -33,16 +37,29 @@ const TableForm = ({ title }) => {
   };
 
   const renderFields = () => {
-    return fields.map((table, index) => (
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    return fields.map((item, index) => (
       <TableField
-        key={table.id}
-        fieldArrayName={`table[${index}]`}
+        key={item.id}
+        item={item}
+        fieldArrayName={`${name}[${index}]`}
         removeField={() => remove(index)}
         register={register}
         errors={errors}
       />
     ));
   };
+
+  useEffect(() => {
+    if (defaultValues) {
+      console.log(defaultValues);
+      defaultValues.map((item) => append(item));
+    }
+    setLoading(false);
+  }, []);
 
   return (
     <FormWrapper loading={false} onSubmit={handleSubmit(onSubmit)}>
@@ -52,6 +69,7 @@ const TableForm = ({ title }) => {
             type={FormFieldEnum.Text}
             name="table_name"
             label="Table Name"
+            defaultValue={name}
             register={register}
             errors={errors}
             validationRules={{
@@ -68,7 +86,7 @@ const TableForm = ({ title }) => {
             <FormButton text="Save Table" type="submit" />
           </span>
         </div>
-        {fields.length ? (
+        {defaultValues ? (
           renderFields()
         ) : (
           <EmptyState

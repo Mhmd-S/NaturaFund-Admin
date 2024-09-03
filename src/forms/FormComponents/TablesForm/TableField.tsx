@@ -6,7 +6,7 @@ import FormField from '@/forms/FormComponents/FormField';
 import { FormFieldEnum } from '@/types/FormComponentsTypes';
 import { TableFieldProps } from '@/types/FormComponentsTypes';
 
-const TableField = ({ errors, fieldArrayName, register, removeField }: TableFieldProps) => {
+const TableField = ({ item, errors, fieldArrayName, register, removeField }: TableFieldProps) => {
   return (
     <div className="cols-span-2 grid grid-cols-[45%_45%_5%] place-items-center gap-4">
       <FormField
@@ -15,6 +15,7 @@ const TableField = ({ errors, fieldArrayName, register, removeField }: TableFiel
         label="Detail Label"
         register={register}
         errors={errors}
+        defaultValue={item.label}
         validationRules={{
           required: 'Field is required',
         }}
@@ -25,6 +26,7 @@ const TableField = ({ errors, fieldArrayName, register, removeField }: TableFiel
         label="Detail Value"
         register={register}
         errors={errors}
+        defaultValue={item.label}
         validationRules={{
           required: 'Field is required',
         }}

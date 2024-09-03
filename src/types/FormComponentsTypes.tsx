@@ -57,16 +57,15 @@ export interface FormFileUploadProps extends FormComponentProps {
 }
 
 export interface TableFormProps {
-  title?: string;
-  control: Control;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  name?: string;
+  defaultValues?: Record<string, string>[];
 }
 
 export interface TableFieldProps {
+  item: Record<'id', string>;
   fieldArrayName: string;
   errors: FieldErrors;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<Record<string, string>[]>;
   removeField: UseFieldArrayRemove;
 }
 
