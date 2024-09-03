@@ -57,8 +57,8 @@ export interface FormFileUploadProps extends FormComponentProps {
 }
 
 export interface TableFormProps {
-  name?: string;
-  defaultValues?: Record<string, string>[];
+  name: string;
+  defaultValues?: Object;
 }
 
 export interface TableFieldProps {

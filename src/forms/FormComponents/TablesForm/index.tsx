@@ -12,6 +12,16 @@ import FormWrapper from '@/forms/FormComponents/FormWrapper';
 
 import TableField from '@/forms/FormComponents/TablesForm/TableField';
 
+type FormSubmitParams = {
+  table_name: string;
+  [key: string]: { label: string; value: string }[];
+};
+
+type FormSubmitOutput = {
+  tableName: string;
+  [key: string]: string;
+};
+
 const TableForm = ({ name, defaultValues }: TableFormProps) => {
   const [loading, setLoading] = useState(true);
 
@@ -32,13 +42,16 @@ const TableForm = ({ name, defaultValues }: TableFormProps) => {
     },
   });
 
-  const onSubmit = (data) => {
-    // From arry of label and value to object
-    let obj = {};
+  const onSubmit = (data: FormSubmitParams) => {
+    // From arry of labels and values to object
+    let obj: FormSubmitOutput = {
+      tableName: data.table_name,
+    };
 
     data[name].map((item) => {
       obj[item.label] = item.value;
     });
+
     console.log(obj);
   };
 
