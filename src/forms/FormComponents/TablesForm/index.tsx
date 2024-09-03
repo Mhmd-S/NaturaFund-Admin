@@ -33,7 +33,13 @@ const TableForm = ({ name, defaultValues }: TableFormProps) => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    // From arry of label and value to object
+    let obj = {};
+
+    data[name].map((item) => {
+      obj[item.label] = item.value;
+    });
+    console.log(obj);
   };
 
   const renderFields = () => {
@@ -55,8 +61,7 @@ const TableForm = ({ name, defaultValues }: TableFormProps) => {
 
   useEffect(() => {
     if (defaultValues) {
-      console.log(defaultValues);
-      defaultValues.map((item) => append(item));
+      Object.keys(defaultValues).map((item) => append({ label: item, value: defaultValues[item] }));
     }
     setLoading(false);
   }, []);

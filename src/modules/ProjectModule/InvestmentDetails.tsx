@@ -10,7 +10,7 @@ import TableForm from '@/forms/FormComponents/TablesForm';
 let project = {
   projectName: 'Project Name',
   description: 'Project Description',
-  company: {
+  company: { // We have to change from label to fvalue
     name: 'Company Name',
     email: 'Company Email',
     phone: 'Company Phone',
