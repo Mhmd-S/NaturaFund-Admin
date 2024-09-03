@@ -6,7 +6,6 @@ import FormFieldError from '@/forms/FormComponents/FormFieldError';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTrashAlt,
   faUpload,
   faCloudDownloadAlt,
   faFileWord,
@@ -14,6 +13,8 @@ import {
   faFileExcel,
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
+
+import { TrashIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
 import { FormFileUploadProps } from '@/types/FormComponentsTypes';
 
@@ -53,12 +54,15 @@ const FileUploadField = ({
 
   const renderIcon = (file: File | string) => {
     if (!file) {
-      return;
+      return null;
     }
 
     const fileType = typeof file === 'string' ? file.split('.').pop() : file.type;
 
-    if (fileType.includes('jpeg') || fileType.includes('png') || fileType.includes('jpg')) {
+    if (
+      fileType &&
+      (fileType.includes('jpeg') || fileType.includes('png') || fileType.includes('jpg'))
+    ) {
       return (
         <img
           className="size-full object-cover rounded-md"
@@ -68,56 +72,59 @@ const FileUploadField = ({
       );
     }
 
-    if (fileType.includes('pdf')) {
-      return <FontAwesomeIcon icon={faFilePdf} className="text-red-500" />;
+    if (fileType && fileType.includes('pdf')) {
+      return <FontAwesomeIcon icon={faFilePdf} className="size-8 text-red-500" />;
     }
 
-    if (fileType.includes('word')) {
-      return <FontAwesomeIcon icon={faFileWord} className="text-blue-500" />;
+    if (fileType && fileType.includes('word')) {
+      return <FontAwesomeIcon icon={faFileWord} className="size-8 text-blue-500" />;
     }
 
-    if (fileType.includes('excel')) {
-      return <FontAwesomeIcon icon={faFileExcel} className="text-green-500" />;
+    if (fileType && fileType.includes('excel')) {
+      return <FontAwesomeIcon icon={faFileExcel} className="size-8 text-green-500" />;
     }
 
-    if (fileType.includes('powerpoint')) {
-      return <FontAwesomeIcon icon={faFile} className="text-orange-500" />;
+    if (fileType && fileType.includes('powerpoint')) {
+      return <FontAwesomeIcon icon={faFile} className="size-8 text-orange-500" />;
     }
 
-    return <FontAwesomeIcon icon={faFile} className="text-gray-300" />;
+    return <FontAwesomeIcon icon={faFile} className="size-8 text-gray-300" />;
   };
 
   const renderFiles = () => {
     return files.map((file, index) => (
-      <li key={index} className="w-full grid grid-cols-2 grid-rows-1 gap-x-2">
-        <div className="size-full row-span-2 items-center">{renderIcon(file)}</div>
-        <div className="h-full grid grid-cols-1">
-          <FontAwesomeIcon
-            icon={faTrashAlt}
-            className="justify-self-end p-1 size-5 cursor-pointer text-brand-200 rounded-full"
-            onClick={() => handleRemoveFile(index)}
+      <li
+        key={index}
+        className="w-full p-2 grid grid-cols-[25%_45%_12.5%_12.5%] grid-rows-1 gap-1 place-items-center rounded-md bg-white shadow-md"
+      >
+        <span className="flex items-center justify-center p-2 w-12 h-12 bg-white rounded-md">
+          {renderIcon(file)}
+        </span>
+        <span className="w-full flex flex-col">
+          <p className="w-full text-md overflow-hidden overflow-ellipsis whitespace-nowrap">
+            {typeof file === 'string' ? file.split('/').pop() : file.name}
+          </p>
+          <p className="text-sm text-gray-400">
+            {typeof file === 'string' ? 'URL' : convertStorageSize(file.size)}
+          </p>
+        </span>
+        <a
+          className="flex items-center"
+          href={typeof file === 'string' ? file : URL.createObjectURL(file)}
+          download={typeof file === 'string' ? file.split('/').pop() : file.name}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <ArrowDownTrayIcon
+            stroke="currentColor"
+            className="p-1 size-7 cursor-pointer rounded-ful text-gray-600"
           />
-          <div className="flex flex-col items-center">
-            <p className="text-md">
-              {typeof file === 'string' ? file.split('/').pop() : file.name}
-            </p>
-            <a
-              className="flex items-center"
-              href={typeof file === 'string' ? file : URL.createObjectURL(file)}
-              download={typeof file === 'string' ? file.split('/').pop() : file.name}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <p className="text-sm text-gray-400">
-                {typeof file === 'string' ? 'URL' : convertStorageSize(file.size)}
-              </p>
-              <FontAwesomeIcon
-                icon={faCloudDownloadAlt}
-                className="p-1 size-5 cursor-pointer rounded-ful text-brand-600"
-              />
-            </a>
-          </div>
-        </div>
+        </a>
+        <TrashIcon
+          stroke="currentColor"
+          className="justify-self-end p-1 size-7 cursor-pointer text-gray-600 rounded-full"
+          onClick={() => handleRemoveFile(index)}
+        />
       </li>
     ));
   };
@@ -133,12 +140,13 @@ const FileUploadField = ({
         } ${files.length ? 'border-solid' : 'border-dashed'}`}
       >
         {/* Files Uploaded */}
-        <ul className="h-full w-full p-4 overflow-y-scroll">
+        <ul className="h-full w-full border-r-2 rounded-l-md flex flex-col gap-8 bg-gray-100 px-4 py-8 overflow-y-scroll">
           {files.length > 0 ? renderFiles() : null}
         </ul>
 
         {/* Uploaed Field */}
-        <div className="relative h-full p-4 flex flex-col justify-center items-center gap-2 text-gray-600 text-center ">
+        <div className="relative h-full p-4 flex flex-col justify-center items-center gap-2 text-gray-600 text-center">
+
           <FontAwesomeIcon
             icon={faUpload}
             className={`size-7 ${errors[name] ? 'text-pink-700' : 'text-gray-300'}`}

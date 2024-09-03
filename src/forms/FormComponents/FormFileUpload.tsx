@@ -25,12 +25,12 @@ const FileUploadField = ({
   errors,
   setError,
   validationRules,
-  currentFile,
+  defaultFile,
   inputGuidelines,
   acceptSize,
   resetField,
 }: FormFileUploadProps) => {
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<string | null>(defaultFile || null);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files;
@@ -44,39 +44,45 @@ const FileUploadField = ({
     setFile(null);
   };
 
-  const renderIcon = () => {
+  const renderIcon = (file: File | string) => {
     if (!file) {
-      return;
+      return null;
     }
 
-    if (file.type.includes('jpeg') || file.type.includes('png') || file.type.includes('jpg')) {
+    const fileType = typeof file === 'string' ? file.split('.').pop() : file.type;
+
+    if (
+      fileType &&
+      (fileType.includes('jpeg') || fileType.includes('png') || fileType.includes('jpg'))
+    ) {
       return (
         <img
           className="size-full object-cover rounded-md"
-          src={typeof file == 'string' ? file : URL.createObjectURL(file)}
+          src={typeof file === 'string' ? file : URL.createObjectURL(file)}
           alt="Preview"
         />
       );
     }
 
-    if (file.type.includes('pdf')) {
+    if (fileType && fileType.includes('pdf')) {
       return <FontAwesomeIcon icon={faFilePdf} className="text-red-500" />;
     }
 
-    if (file.type.includes('word')) {
+    if (fileType && fileType.includes('word')) {
       return <FontAwesomeIcon icon={faFileWord} className="text-blue-500" />;
     }
 
-    if (file.type.includes('excel')) {
+    if (fileType && fileType.includes('excel')) {
       return <FontAwesomeIcon icon={faFileExcel} className="text-green-500" />;
     }
 
-    if (file.type.includes('powerpoint')) {
+    if (fileType && fileType.includes('powerpoint')) {
       return <FontAwesomeIcon icon={faFile} className="text-orange-500" />;
     }
 
-    return <FontAwesomeIcon icon={faFile} className="text-gray-300" />;
+    return <FontAwesomeIcon icon={faFile} className="size-12 text-gray-300" />;
   };
+
 
   return (
     <div className="h-fit w-1/2">
