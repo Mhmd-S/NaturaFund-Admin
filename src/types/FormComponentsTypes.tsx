@@ -17,22 +17,8 @@ interface FormComponentProps {
   validationRules: any;
 }
 
-export enum FormFieldEnum {
-  Text = 'text',
-  Email = 'email',
-  Password = 'password',
-  Number = 'number',
-  Date = 'date',
-  Time = 'time',
-  Datetime = 'datetime',
-  Datetime_Local = 'datetime-local',
-  Month = 'month',
-  Week = 'week',
-  Color = 'color',
-}
-
 export interface FormFieldProps extends FormComponentProps {
-  type: FormFieldEnum;
+  type: 'text' | 'email' | 'password' | 'number' | 'date' | 'time' | 'datetime' | 'datetime-local' | 'month' | 'week' | 'color';
   defaultValue?: string;
   placeholder?: string;
 }
@@ -48,7 +34,7 @@ export interface FormTextAreaProps extends FormComponentProps {
 }
 
 export interface FormFileUploadProps extends FormComponentProps {
-  currentFile: any;
+  currentFile: string;
   accept: string;
   acceptSize: number;
   inputGuidelines: string;

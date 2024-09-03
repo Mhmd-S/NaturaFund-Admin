@@ -5,7 +5,6 @@ import FormWrapper from '@/forms/FormComponents/FormWrapper';
 import FormTextArea from '@/forms/FormComponents/FormTextArea';
 import FileUploadField from '@/forms/FormComponents/FormFileUpload';
 import FormField from '@/forms/FormComponents/FormField';
-import { FormFieldEnum } from '@/types/FormComponentsTypes';
 import FormButton from '@/forms/FormComponents/FormButton';
 
 const Overview = () => {
@@ -50,7 +49,7 @@ const Overview = () => {
       {/* Image */}
       <FormField
         name="projectName"
-        type={FormFieldEnum.Text}
+        type="text"
         defaultValue={project.projectName}
         label="Project Name"
         register={register}

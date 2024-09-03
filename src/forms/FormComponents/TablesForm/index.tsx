@@ -3,7 +3,7 @@ import { set, useFieldArray, useForm } from 'react-hook-form';
 
 import { faMehRollingEyes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { FormFieldEnum, TableFormProps } from '@/types/FormComponentsTypes';
+import { TableFormProps } from '@/types/FormComponentsTypes';
 
 import FormField from '@/forms/FormComponents/FormField';
 import FormButton from '@/forms/FormComponents/FormButton';
@@ -84,7 +84,7 @@ const TableForm = ({ name, defaultValues }: TableFormProps) => {
       <div className="flex flex-col gap-4 py-4">
         <div className="grid grid-cols-[50%_40%] grid-rows-1  place-items-center justify-between">
           <FormField
-            type={FormFieldEnum.Text}
+            type='text'
             name="table_name"
             label="Table Name"
             defaultValue={name}

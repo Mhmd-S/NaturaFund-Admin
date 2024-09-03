@@ -1,7 +1,7 @@
 import React from "react";
 import FormFieldError from "@/forms/formComponents/FormFieldError";
 
-function FormSelect({ register, options, name, label, errors, validationRules }) {
+function FormSelect({ register, options, name, label, errors, validationRules, defaultValue }) {
     return (
         <div className="w-full flex flex-col">
             <label
@@ -15,6 +15,7 @@ function FormSelect({ register, options, name, label, errors, validationRules })
                 {...register(name, validationRules)}
                 name={name}
                 id={name}
+                defaultValue={defaultValue}
                 placeholder={`Select ${label}`}
             >
                 <option key="default" value="DEFAULT">

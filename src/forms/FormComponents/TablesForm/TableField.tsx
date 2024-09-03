@@ -3,14 +3,13 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import FormField from '@/forms/FormComponents/FormField';
 
-import { FormFieldEnum } from '@/types/FormComponentsTypes';
 import { TableFieldProps } from '@/types/FormComponentsTypes';
 
 const TableField = ({ item, errors, fieldArrayName, register, removeField }: TableFieldProps) => {
   return (
     <div className="cols-span-2 grid grid-cols-[45%_45%_5%] place-items-center gap-4">
       <FormField
-        type={FormFieldEnum.Text}
+        type="text"
         name={`${fieldArrayName}.label`}
         label="Detail Label"
         register={register}
@@ -21,7 +20,7 @@ const TableField = ({ item, errors, fieldArrayName, register, removeField }: Tab
         }}
       />
       <FormField
-        type={FormFieldEnum.Text}
+        type="text"
         name={`${fieldArrayName}.value`}
         label="Detail Value"
         register={register}

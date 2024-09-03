@@ -2,11 +2,13 @@ import { useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import Overview from '@/modules/ProjectModule/Overview';
-import FinancialDetails from '@/modules/ProjectModule/FinancialDetails';
 import TabbedWindow from '@/components/common/TabbedWindow';
 
-import InvestmentDetails from '@/modules/ProjectModule/InvestmentDetails';
+import Overview from '@/forms/ProjectForm/Overview';
+import FinancialDetails from '@/forms/ProjectForm/FinancialDetails';
+import InvestmentDetails from '@/forms/ProjectForm/InvestmentDetails';
+import Status from '@/forms/ProjectForm/Status';
+import Documents from '@/forms/ProjectForm/Documents';
 
 const Project = () => {
   const { projectId } = useParams();
@@ -21,6 +23,10 @@ const Project = () => {
         return <FinancialDetails />;
       case 'Investment Details':
         return <InvestmentDetails />;
+      case 'Status':
+        return <Status />;
+      case 'Documents':
+        return <Documents />;
       default:
         return <Overview />;
     }
@@ -30,7 +36,7 @@ const Project = () => {
     <TabbedWindow
       currentTab={currentTab}
       setCurrentTab={setCurrentTab}
-      tabs={['Overview', 'Investment Details', 'Financial Details']}
+      tabs={['Overview', 'Investment Details', 'Financial Details', 'Status', 'Documents']}
     >
       {renderTab()}
     </TabbedWindow>
