@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import FileUploadField from '@/forms/FormComponents/FormMultiFileUpload';
 import FormWrapper from '@/forms/FormComponents/FormWrapper';
+import FormButton from '../FormComponents/FormButton';
 
 const LEGAL = {
   'certificate_of_incorporation.pdf': '1.9 mb',
@@ -30,7 +31,6 @@ const Documents = () => {
 
   return (
     <FormWrapper loading={false} onSubmit={handleSubmit((data) => console.log(data))}>
-      <div className="h-1/2 w-full pb-4">
         <FileUploadField
           name="legal"
           label="Legal Documents"
@@ -51,7 +51,7 @@ const Documents = () => {
             'https://picsum.photos/200/300',
           ]}
         />
-      </div>
+        <FormButton text="Save" type="submit" />
     </FormWrapper>
   );
 };

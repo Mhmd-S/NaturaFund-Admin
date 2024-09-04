@@ -127,7 +127,10 @@ const Overview = () => {
         {/* ToDo: Add hyperlink that takes you to the company tab to edit */}
         <DetailsTable items={getCompanyDetails()} />
       </div>
-      <FormButton text="Save Changes" />
+      <FormButton
+        text="Save Changes"
+        type="submit"
+      />
     </FormWrapper>
   );
 };

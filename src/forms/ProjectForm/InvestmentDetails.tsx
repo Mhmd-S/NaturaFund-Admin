@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import FormWrapper from '@/forms/FormComponents/FormWrapper';
@@ -10,7 +10,8 @@ import TableForm from '@/forms/FormComponents/TablesForm';
 let project = {
   projectName: 'Project Name',
   description: 'Project Description',
-  company: { // We have to change from label to fvalue
+  company: {
+    // We have to change from label to fvalue
     name: 'Company Name',
     email: 'Company Email',
     phone: 'Company Phone',
@@ -69,6 +70,7 @@ const InvestmentDetails = () => {
           name="investment_vehicle"
           register={register}
           errors={errors}
+          defaultValue={project.company.name}
           validationRules={{
             required: 'Investment Vehicle is required',
           }}

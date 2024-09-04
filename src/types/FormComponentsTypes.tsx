@@ -42,6 +42,14 @@ export interface FormFileUploadProps extends FormComponentProps {
   setError: UseFormSetError<FieldValues>;
 }
 
+export interface FormFileUploadFieldProps extends FormComponentProps {
+  accept: string;
+  acceptSize: number;
+  inputGuidelines: string;
+  defaultFiles: string[];
+  resetField: UseFormResetField<FieldValues>;
+}
+
 export interface TableFormProps {
   name: string;
   defaultValues?: Object;

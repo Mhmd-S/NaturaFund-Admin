@@ -7,7 +7,6 @@ import FormFieldError from '@/forms/FormComponents/FormFieldError';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUpload,
-  faCloudDownloadAlt,
   faFileWord,
   faFilePdf,
   faFileExcel,
@@ -16,11 +15,7 @@ import {
 
 import { TrashIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 
-import { FormFileUploadProps } from '@/types/FormComponentsTypes';
-
-interface FormMultiFileUploadProps extends FormFileUploadProps {
-  defaultFiles?: string[];
-}
+import { FormFileUploadFieldProps } from '@/types/FormComponentsTypes';
 
 const FileUploadField = ({
   name,
@@ -33,7 +28,7 @@ const FileUploadField = ({
   inputGuidelines,
   acceptSize,
   resetField,
-}: FormMultiFileUploadProps) => {
+}: FormFileUploadFieldProps) => {
   const [files, setFiles] = useState<string[] | null>(defaultFiles || []);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,7 +125,7 @@ const FileUploadField = ({
   };
 
   return (
-    <div className="h-96 w-full">
+    <div className="h-96 w-full mb-20">
       <label htmlFor={name} className="block mb-2 text-sm font-medium leading-6 text-gray-900">
         {label}
       </label>
