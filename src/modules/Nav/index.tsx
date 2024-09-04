@@ -26,7 +26,7 @@ const MENU_ITEMS = [
     ),
   },
   {
-    name: 'Project Applications',
+    name: 'Applications',
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
