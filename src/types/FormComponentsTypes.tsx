@@ -24,6 +24,8 @@ export interface FormFieldProps extends FormComponentProps {
 }
 
 export interface FormSelectProps extends FormComponentProps {
+  defaultValue: string;
+  labelShow?: boolean;
   options: string[];
 }
 

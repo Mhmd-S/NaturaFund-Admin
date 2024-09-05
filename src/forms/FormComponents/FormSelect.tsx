@@ -1,5 +1,6 @@
 import React from 'react';
-import FormFieldError from '@/forms/formComponents/FormFieldError';
+import FormFieldError from '@/forms/FormComponents/FormFieldError';
+import { FormSelectProps } from '@/types/FormComponentsTypes';
 
 function FormSelect({
   register,
@@ -10,7 +11,7 @@ function FormSelect({
   errors,
   validationRules,
   defaultValue,
-}) {
+}: FormSelectProps) {
   return (
     <div className="w-full flex flex-col">
       <label

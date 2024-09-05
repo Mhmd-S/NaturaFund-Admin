@@ -15,12 +15,11 @@ const DUMMYUSER = {
 };
 
 const UserDetails = () => {
-
   const navigate = useNavigate();
 
   const handleGoBack = () => {
     navigate(-1);
-  }
+  };
 
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
@@ -38,7 +37,6 @@ const UserDetails = () => {
         </h2>
 
         <DetailsTable items={DUMMYUSER} />
-
       </div>
     </div>
   );
