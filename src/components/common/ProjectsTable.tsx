@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 import extractHeader from "@/utils/extractHeader";
 
@@ -36,9 +37,11 @@ const ProjectsTable = ({ data, handleOnClick }) => {
                                 </td>
                             ))}
                             <td className="px-4 py-2 whitespace-nowrap text-gray-900">
-                                <button className="px-4 py-2 border-[1px] border-brand-900 rounded-lg text-white bg-brand-900 transition-all hover:bg-white hover:text-brand-900">
+                                <Link 
+                                    to="1"
+                                className="inline-block px-4 py-2 border-[1px] border-brand-900 rounded-lg text-white bg-brand-900 transition-all hover:bg-white hover:text-brand-900">
                                     View
-                                </button>
+                                </Link>
                             </td>
                         </tr>
                     ))}

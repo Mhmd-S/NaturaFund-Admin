@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import { FormWrapper, FormSelect, FormButton } from '@/forms/FormComponents';
 import DetailsTable from '@/components/common/DetailsTable';
 import MediaTable from '@/components/common/MediaTable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const DUMMYAPPLICATION = {
   project: {
@@ -20,11 +23,21 @@ const DUMMYAPPLICATION = {
     city: 'San Francisco',
   },
   status: 'In Progress',
-  documents: ['Project Proposal', 'Technical Specifications', 'Budget Report', 'Timeline', '123', '123', '123'],
+  documents: [
+    'Project Proposal',
+    'Technical Specifications',
+    'Budget Report',
+    'Timeline',
+    '123',
+    '123',
+    '123',
+  ],
   submission_date: '2023-11-15',
 };
 
 const Application = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -37,6 +50,10 @@ const Application = () => {
     return rest;
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // Goes back one step in the history stack
+  };
+
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -44,15 +61,26 @@ const Application = () => {
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
       <div className=" p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
-        <h2 className="text-3xl py-4 font-bold sm:text-4xl flex flex-col">
-          <span>{DUMMYAPPLICATION.project.name}</span>
+        <h2 className="text-3xl py-4 font-bold sm:text-4xl flex flex-col space-y-1">
+          <span className="flex items-center gap-4">
+            {' '}
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className="size-5 cursor-pointer"
+              onClick={handleGoBack}
+            />
+            {DUMMYAPPLICATION.project.name}
+          </span>
           <span className=" text-gray-600 text-sm font-normal">
-            By: <strong>{DUMMYAPPLICATION.project.owner.name}</strong>
+            Submitted: <strong>{DUMMYAPPLICATION.project.submission_date}</strong>
+          </span>
+          <span className=" text-gray-600 text-sm font-normal">
+            Accuracy: <strong>99.8%</strong>
           </span>
         </h2>
 
         <FormWrapper loading={false} onSubmit={handleSubmit(onSubmit)}>
-          <div className='grid grid-cols-[50%_20%] gap-4 pt-5'>
+          <div className="grid grid-cols-[50%_20%] gap-4 pt-5 justify-center">
             <FormSelect
               errors={errors}
               label="Status"
