@@ -20,7 +20,7 @@ const DUMMYAPPLICATION = {
     city: 'San Francisco',
   },
   status: 'In Progress',
-  documents: ['Project Proposal', 'Technical Specifications', 'Budget Report', 'Timeline'],
+  documents: ['Project Proposal', 'Technical Specifications', 'Budget Report', 'Timeline', '123', '123', '123'],
   submission_date: '2023-11-15',
 };
 
