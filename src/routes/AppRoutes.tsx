@@ -1,6 +1,4 @@
-import Details from '@/pages/KYC/KycDetails';
 import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
 
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
@@ -12,6 +10,9 @@ const Application = lazy(() => import('@/pages/Applications/Application'));
 
 const KYC = lazy(() => import('@/pages/KYC'));
 const KycDetails = lazy(() => import('@/pages/KYC/KycDetails'));
+
+const Users = lazy(() => import('@/pages/Users'));
+const UserDetails = lazy(() => import('@/pages/Users/UserDetails'));
 
 let routes = {
   expense: [],
@@ -46,7 +47,11 @@ let routes = {
     },
     {
       path: '/users',
-      element: <Projects />,
+      element: <Users />,
+    },
+    {
+      path: '/users/:id',
+      element: <UserDetails />,
     },
     {
       path: '*',
