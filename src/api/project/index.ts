@@ -69,12 +69,12 @@ export const getProjecstByCorporation = async (corporationId) => {
   }
 };
 
-export const updateProject = async (id: string, data: any) => {
+export const updateProject = async (id: string, projectData: unknown) => {
   try {
     const response = await api.request({
       method: 'PUT',
       url: `project/${id}`,
-      data,
+      data: projectData,
     });
 
     const { status, data } = response;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
@@ -10,30 +10,50 @@ import InvestmentDetails from '@forms/ProjectForm/InvestmentDetails';
 import Status from '@forms/ProjectForm/Status';
 import Documents from '@forms/ProjectForm/Documents';
 
-const Project = () => {
-  const { projectId } = useParams();
+import * as projectApi from '@api/project';
 
+const Project = () => {
+  const { id } = useParams();
+
+  const [project, setProject] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentTab, setCurrentTab] = useState('Overview');
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await projectApi.getProject(id);
+        setProject(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, [id]);
 
   const renderTab = () => {
     switch (currentTab) {
       case 'overview':
-        return <Overview />;
+        return <Overview project={project} />;
       case 'Financial Details':
-        return <FinancialDetails />;
+        return <FinancialDetails financeDetails={project.financeDetails} />;
       case 'Investment Details':
-        return <InvestmentDetails />;
+        return <InvestmentDetails investmentDetails={project.investmentDetails} />;
       case 'Status':
-        return <Status />;
+        return <Status status={project.status} />;
       case 'Documents':
-        return <Documents />;
+        return <Documents documennts={project.documents} />;
       default:
-        return <Overview />;
+        return <Overview project={project} />;
     }
   };
 
   return (
     <TabbedWindow
+      loading={loading}
       currentTab={currentTab}
       setCurrentTab={setCurrentTab}
       tabs={['Overview', 'Investment Details', 'Financial Details', 'Status', 'Documents']}
