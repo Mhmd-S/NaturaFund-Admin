@@ -1,6 +1,11 @@
 import React from "react";
 
-const SearchBar = () => {
+type SearchBarProps = {
+    searchText: string;
+    setSearchText: (text: string) => void;
+};
+
+const SearchBar = ({ searchText, setSearchText }: SearchBarProps) => {
     return (
         <div className="relative">
             <label htmlFor="Search" className="sr-only">
@@ -10,6 +15,8 @@ const SearchBar = () => {
             <input
                 type="text"
                 id="Search"
+                value={searchText}
+                aonChange={(e) => setSearchText(e.target.value)}
                 placeholder="Search for..."
                 className="w-full rounded-md border-gray-200 py-2.5 pl-2.5 pe-10 shadow-sm sm:text-sm"
             />

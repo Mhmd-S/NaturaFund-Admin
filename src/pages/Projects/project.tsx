@@ -2,13 +2,13 @@ import { useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import TabbedWindow from '@/components/common/TabbedWindow';
+import TabbedWindow from '@components/common/TabbedWindow';
 
-import Overview from '@/forms/ProjectForm/Overview';
-import FinancialDetails from '@/forms/ProjectForm/FinancialDetails';
-import InvestmentDetails from '@/forms/ProjectForm/InvestmentDetails';
-import Status from '@/forms/ProjectForm/Status';
-import Documents from '@/forms/ProjectForm/Documents';
+import Overview from '@forms/ProjectForm/Overview';
+import FinancialDetails from '@forms/ProjectForm/FinancialDetails';
+import InvestmentDetails from '@forms/ProjectForm/InvestmentDetails';
+import Status from '@forms/ProjectForm/Status';
+import Documents from '@forms/ProjectForm/Documents';
 
 const Project = () => {
   const { projectId } = useParams();
