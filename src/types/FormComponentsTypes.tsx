@@ -53,7 +53,9 @@ export interface FormFileUploadFieldProps extends FormComponentProps {
 }
 
 export interface TableFormProps {
+  projet: any;
   name: string;
+  category: string;
   defaultValues?: Object;
 }
 

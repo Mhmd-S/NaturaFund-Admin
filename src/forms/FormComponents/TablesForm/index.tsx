@@ -3,27 +3,25 @@ import { set, useFieldArray, useForm } from 'react-hook-form';
 
 import { faMehRollingEyes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-import { TableFormProps } from '@/types/FormComponentsTypes';
+import { TableFormProps } from '@types/FormComponentsTypes';
 
-import FormField from '@/forms/FormComponents/FormField';
-import FormButton from '@/forms/FormComponents/FormButton';
-import EmptyState from '@/components/common/EmptyState';
-import FormWrapper from '@/forms/FormComponents/FormWrapper';
+import FormField from '@forms/FormComponents/FormField';
+import FormButton from '@forms/FormComponents/FormButton';
+import EmptyState from '@components/common/EmptyState';
+import FormWrapper from '@forms/FormComponents/FormWrapper';
+import TableField from '@forms/FormComponents/TablesForm/TableField';
 
-import TableField from '@/forms/FormComponents/TablesForm/TableField';
+import * as projectApi from '@api/project';
+import LoadingIcon from '@components/common/LoadingIcon';
 
 type FormSubmitParams = {
-  table_name: string;
   [key: string]: { label: string; value: string }[];
 };
 
-type FormSubmitOutput = {
-  tableName: string;
-  [key: string]: string;
-};
-
-const TableForm = ({ name, defaultValues }: TableFormProps) => {
-  const [loading, setLoading] = useState(true);
+const TableForm = ({ project, category, name, defaultValues }: TableFormProps) => {
+  const [loading, setLoading] = useState(false);
+  const [updateError, setUpdateError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   const {
     register,
@@ -42,22 +40,38 @@ const TableForm = ({ name, defaultValues }: TableFormProps) => {
     },
   });
 
-  const onSubmit = (data: FormSubmitParams) => {
-    // From arry of labels and values to object
-    let obj: FormSubmitOutput = {
-      tableName: data.table_name,
+  const onSubmit = async (formData: FormSubmitParams) => {
+    setLoading(true);
+    setUpdateError(null);
+
+    const tableData = formData[name].reduce((acc, item) => {
+      acc[item.label] = item.value;
+      return acc;
+    }, {});
+
+    const objectToSend = {
+      ...project[category],
+      [formData.name]: tableData,
     };
 
-    data[name].map((item) => {
-      obj[item.label] = item.value;
-    });
+    try {
+      const response = await projectApi.updateProject(project._id, { [category]: objectToSend });
 
-    console.log(obj);
+      if (response?.status === 'success') {
+        setIsSuccess(true);
+      } else {
+        setUpdateError('An error occurred, please try again.');
+      }
+    } catch (error) {
+      setUpdateError('An error occurred, please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderFields = () => {
     if (loading) {
-      return <div>Loading...</div>;
+      return <LoadingIcon />;
     }
 
     return fields.map((item, index) => (
@@ -80,20 +94,20 @@ const TableForm = ({ name, defaultValues }: TableFormProps) => {
   }, []);
 
   return (
-    <FormWrapper loading={false} onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
+      {isSuccess && (
+        <div className="bg-green-200 border-green-400 border-l-4 p-4 mb-4">
+          <p className="text-green-700">Updated Project Successfully!</p>
+        </div>
+      )}
+      {updateError && (
+        <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
+          <p className="text-red-700">{updateError}</p>
+        </div>
+      )}
       <div className="flex flex-col gap-4 py-4">
         <div className="grid grid-cols-[50%_40%] grid-rows-1  place-items-center justify-between">
-          <FormField
-            type='text'
-            name="table_name"
-            label="Table Name"
-            defaultValue={name}
-            register={register}
-            errors={errors}
-            validationRules={{
-              required: 'Field is required',
-            }}
-          />
+          <h3 className="w-full h-full text-4xl font-semibold text-brand-800 capitalize">{name} Table</h3>
           <span className="w-full pb-4 flex justify-between items-center gap-4">
             <FormButton
               type="button"
