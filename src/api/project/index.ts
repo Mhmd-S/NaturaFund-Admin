@@ -1,15 +1,14 @@
-import { API_BASE_URL } from '@/config/serverApiConfig';
+import { api } from '@config/axiosConfig';
+import errorHandler from '@request/errorHandler';
+import successHandler from '@request/successHandler';
 
-import axios from 'axios';
-import errorHandler from '@/request/errorHandler';
-import successHandler from '@/request/successHandler';
-
-export const login = async ({ loginData }) => {
+export const getProjects = async (page: number) => {
   try {
-    const response = await axios.post(
-      API_BASE_URL + `login?timestamp=${new Date().getTime()}`,
-      loginData
-    );
+    const response = await api.request({
+      method: 'GET',
+      url: `project`,
+      params: { page },
+    });
 
     const { status, data } = response;
 
@@ -26,73 +25,86 @@ export const login = async ({ loginData }) => {
   }
 };
 
-export const register = async ({ registerData }) => {
+export const getProject = async (id: string) => {
   try {
-    const response = await axios.post(API_BASE_URL + `register`, registerData);
+    const response = await api.request({
+      method: 'GET',
+      url: `project/${id}`,
+    });
 
-    const { status, data } = response;
-
-    successHandler(
-      { data, status },
-      {
-        notifyOnSuccess: true,
-        notifyOnFailed: true,
-      }
-    );
-    return data;
-  } catch (error) {
-    return errorHandler(error);
-  }
-};
-
-export const verify = async ({ userId, emailToken }) => {
-  try {
-    const response = await axios.get(API_BASE_URL + `verify/${userId}/${emailToken}`);
-
-    const { status, data } = response;
-
-    successHandler(
-      { data, status },
-      {
-        notifyOnSuccess: true,
-        notifyOnFailed: true,
-      }
-    );
-    return data;
-  } catch (error) {
-    return errorHandler(error);
-  }
-};
-
-export const resetPassword = async ({ resetPasswordData }) => {
-  try {
-    const response = await axios.post(API_BASE_URL + `resetpassword`, resetPasswordData);
-
-    const { status, data } = response;
-
-    successHandler(
-      { data, status },
-      {
-        notifyOnSuccess: true,
-        notifyOnFailed: true,
-      }
-    );
-    return data;
-  } catch (error) {
-    return errorHandler(error);
-  }
-};
-export const logout = async () => {
-  axios.defaults.withCredentials = true;
-  try {
-    // window.localStorage.clear();
-    const response = await axios.post(API_BASE_URL + `logout?timestamp=${new Date().getTime()}`);
     const { status, data } = response;
 
     successHandler(
       { data, status },
       {
         notifyOnSuccess: false,
+        notifyOnFailed: true,
+      }
+    );
+    return data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const getProjecstByCorporation = async (corporationId) => {
+  try {
+    const response = await api.request({
+      method: 'GET',
+      url: `project/corporation/${corporationId}`,
+    });
+
+    const { status, data } = response;
+
+    successHandler(
+      { data, status },
+      {
+        notifyOnSuccess: false,
+        notifyOnFailed: true,
+      }
+    );
+    return data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const updateProject = async (id: string, data: any) => {
+  try {
+    const response = await api.request({
+      method: 'PUT',
+      url: `project/${id}`,
+      data,
+    });
+
+    const { status, data } = response;
+
+    successHandler(
+      { data, status },
+      {
+        notifyOnSuccess: true,
+        notifyOnFailed: true,
+      }
+    );
+    return data;
+  } catch (error) {
+    return errorHandler(error);
+  }
+};
+
+export const deleteProject = async (id: string) => {
+  try {
+    const response = await api.request({
+      method: 'DELETE',
+      url: `project/${id}`,
+    });
+
+    const { status, data } = response;
+
+    successHandler(
+      { data, status },
+      {
+        notifyOnSuccess: true,
         notifyOnFailed: true,
       }
     );

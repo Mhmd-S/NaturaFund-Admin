@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthContext } from "@context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
     const { authContextAction, state } = useAuthContext();
 
-    const { current: user, isLoggedIn, isLoading, isSuccess } = state;
+    const { login } = authContextAction;
+
+    const { current: user, isLoading, error } = state;
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (user) {
-            navigate("/app/home");
+            navigate("/");
         }
     }, [user]);
 
@@ -23,12 +25,7 @@ const useLogin = () => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        await loginUser(data.email, data.password);
-    };
-
-    const loginUser = async (email, password) => {
-        // await login(email, password);
-        // await getUserInfo();
+        await login(data);
     };
 
     return {
@@ -37,7 +34,7 @@ const useLogin = () => {
         handleSubmit,
         onSubmit,
         isLoading,
-        authError: null,
+        authError: error,
         errors,
     };
 };

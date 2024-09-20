@@ -1,44 +1,50 @@
-import FormField from '@/forms/FormComponents/FormField';
-import FormButton from '@/forms/FormComponents/FormButton';
-import FormWrapper from '@/forms/FormComponents/FormWrapper';
-import useLoginForm from '@/forms/LoginForm/useLoginForm';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import FormField from "@forms/FormComponents/FormField";
+import FormButton from "@forms/FormComponents/FormButton";
+import FormWrapper from "@forms/FormComponents/FormWrapper";
+import useLoginForm from "@forms/LoginForm/useLoginForm";
+import FormGeneralError from "@forms/FormComponents/FormGeneralError";
 
-const LoginForm = ({ setLoginType }) => {
-  const { register, handleSubmit, onSubmit, loading, errors } = useLoginForm();
+const LoginForm = () => {
+    const { register, handleSubmit, onSubmit, isLoading, errors, authError } = useLoginForm();
 
-  return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <FormField
-        name="email"
-        type="email"
-        label="Email Address"
-        register={register}
-        errors={errors}
-        placeholder="ex. JohnDoe@gmail.com"
-        validationRules={{
-          required: 'Email is required',
-          isEmail: 'Invalid email',
-        }}
-      />
+    return (
+        <div className="w-full h-full flex flex-col items-center gap-y-4">
+            <FormWrapper loading={isLoading} onSubmit={handleSubmit(onSubmit)}>
+                <FormGeneralError message={authError} />
+                <FormField
+                    name="email"
+                    type="email"
+                    label="Email"
+                    register={register}
+                    errors={errors}
+                    placeholder="ex. JohnDoe@gmail.com"
+                    validationRules={{
+                        required: "Email is required",
+                        isEmail: "Invalid email",
+                    }}
+                />
 
-      <FormField
-        name="password"
-        type="password"
-        label="Password"
-        register={register}
-        placeholder="********"
-        errors={errors}
-        validationRules={{
-          required: 'Password is required',
-        }}
-      />
+                <FormField
+                    name="password"
+                    type="password"
+                    label="Password"
+                    register={register}
+                    placeholder="********"
+                    errors={errors}
+                    validationRules={{
+                        required: "Password is required",
+                    }}
+                />
 
-      <FormButton text="Log In" loading={loading} disable={Object.keys(errors).length !== 0} />
-    </FormWrapper>
-  );
+                <FormButton
+                    type="submit"
+                    text="Log In"
+                    loading={isLoading}
+                    disable={Object.keys(errors).length !== 0}
+                />
+            </FormWrapper>
+        </div>
+    );
 };
 
 export default LoginForm;
