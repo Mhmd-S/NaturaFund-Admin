@@ -17,13 +17,12 @@ const InvestmentDetails = ({ project }) => {
   const {
     register,
     handleSubmit,
-    resetField,
-    setError,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (formData) => {
     try {
+      setLoading(true);
       const invesmentDetails = {
         description: formData.description,
         type: formData.type,

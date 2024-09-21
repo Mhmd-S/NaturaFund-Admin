@@ -5,14 +5,16 @@ import { faMehRollingEyes, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { TableFormProps } from '@types/FormComponentsTypes';
 
-import FormField from '@forms/FormComponents/FormField';
 import FormButton from '@forms/FormComponents/FormButton';
 import EmptyState from '@components/common/EmptyState';
 import FormWrapper from '@forms/FormComponents/FormWrapper';
 import TableField from '@forms/FormComponents/TablesForm/TableField';
 
 import * as projectApi from '@api/project';
+
 import LoadingIcon from '@components/common/LoadingIcon';
+
+import { normalizeCamelCase } from '@utils/extractHeader';
 
 type FormSubmitParams = {
   [key: string]: { label: string; value: string }[];
@@ -51,7 +53,7 @@ const TableForm = ({ project, category, name, defaultValues }: TableFormProps) =
 
     const objectToSend = {
       ...project[category],
-      [formData.name]: tableData,
+      [name]: tableData,
     };
 
     try {
@@ -107,7 +109,9 @@ const TableForm = ({ project, category, name, defaultValues }: TableFormProps) =
       )}
       <div className="flex flex-col gap-4 py-4">
         <div className="grid grid-cols-[50%_40%] grid-rows-1  place-items-center justify-between">
-          <h3 className="w-full h-full text-4xl font-semibold text-brand-800 capitalize">{name} Table</h3>
+          <h3 className="w-full h-full text-4xl font-semibold text-brand-800 capitalize">
+            {normalizeCamelCase(name)} Table
+          </h3>
           <span className="w-full pb-4 flex justify-between items-center gap-4">
             <FormButton
               type="button"

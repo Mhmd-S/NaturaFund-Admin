@@ -20,7 +20,7 @@ const TabbedWindow = ({
 }: TabbedWindowProps) => {
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
-      <div className="flex flex-col bg-white p-6 rounded-3xl">
+      <div className="flex min-h-screen flex-col bg-white p-6 rounded-3xl">
         {loading ? (
           <LoadingIcon />
         ) : (
