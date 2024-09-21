@@ -37,7 +37,7 @@ const Project = () => {
   const renderTab = () => {
     switch (currentTab) {
       case 'overview':
-        return <Overview project={project} />;
+        return <Overview project={project} setProject={setProject} />;
       case 'Financial Details':
         return <FinancialDetails project={project} />;
       case 'Investment Details':
@@ -47,7 +47,7 @@ const Project = () => {
       case 'Documents':
         return <Documents project={project} setProject={setProject} />;
       default:
-        return <Overview project={project} />;
+        return <Overview project={project} setProject={setProject} />;
     }
   };
 

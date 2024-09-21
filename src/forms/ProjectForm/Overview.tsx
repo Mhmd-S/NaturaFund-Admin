@@ -11,7 +11,7 @@ import FormButton from '@forms/FormComponents/FormButton';
 
 import * as projectApi from '@api/project';
 
-const Overview = ({ project }) => {
+const Overview = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -40,9 +40,10 @@ const Overview = ({ project }) => {
     try {
       const response = await projectApi.updateProject(project._id, formDataToSend);
 
-      const { status } = response;
+      const { status, data  } = response;
 
       if (status === 'success') {
+        setProject(data);
         setIsSuccess(true);
       } else {
         setUpdateError('An error occurred, please try again.');
