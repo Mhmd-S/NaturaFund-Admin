@@ -45,7 +45,7 @@ const Project = () => {
       case 'Status':
         return <Status project={project} />;
       case 'Documents':
-        return <Documents project={project} />;
+        return <Documents project={project} setProject={setProject} />;
       default:
         return <Overview project={project} />;
     }
