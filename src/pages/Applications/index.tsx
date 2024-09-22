@@ -11,16 +11,17 @@ import * as applicationsApi from '@api/application';
 import { faMeh } from '@fortawesome/free-solid-svg-icons';
 
 const Applications = () => {
-
   const navigate = useNavigate();
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
   const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filteredApplications, setFilteredApplications] = useState([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
       try {
         const response = await applicationsApi.getApplications();
         setApplications(response.data);
@@ -32,6 +33,15 @@ const Applications = () => {
     };
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    const filtered = applications.filter((project) =>
+      Object.values(project).some((value) =>
+        value.toString().toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+    setFilteredApplications(filtered);
+  }, [searchText, applications]);
 
   const handleOnClick = (projectId: string) => {
     navigate(`/applications/${projectId}`);
@@ -60,7 +70,7 @@ const Applications = () => {
         ) : applications.length > 0 ? (
           <ProjectsTable
             handleOnClick={handleOnClick}
-            data={applications}
+            data={filteredApplications}
             acceptData={['_id', 'name', 'applicant.registeredName']}
             projectIdField="_id"
             searchText={searchText}
