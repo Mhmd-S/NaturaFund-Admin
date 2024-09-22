@@ -35,15 +35,6 @@ const Projects = () => {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    const filtered = projects.filter((project) =>
-      Object.values(project).some((value) =>
-        value.toString().toLowerCase().includes(searchText.toLowerCase())
-      )
-    );
-    setFilteredProjects(filtered);
-  }, [searchText, projects]);
-
   const handleOnClick = (projectId: string) => {
     navigate(`/projects/${projectId}`);
   };
@@ -63,22 +54,16 @@ const Projects = () => {
             <p className="text-red-700">{error}</p>
           </div>
         )}
-
-        {loading ? (
-          <div className="w-full h-full bg-white rounded-lg flex items-center justify-center">
-            <LoadingIcon />
-          </div>
-        ) : projects.length > 0 ? (
+        
           <ProjectsTable
             data={projects}
             handleOnClick={handleOnClick}
             acceptData={['_id', 'name', '', 'projectStatus', 'type']}
             projectIdField="_id"
             searchText={searchText}
+            loading={loading}
           />
-        ) : (
-          <EmptyState title="Nothing to display" icon={faMeh} />
-        )}
+        
       </div>
     </div>
   );

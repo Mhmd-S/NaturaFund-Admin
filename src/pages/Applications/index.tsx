@@ -13,11 +13,10 @@ import { faMeh } from '@fortawesome/free-solid-svg-icons';
 const Applications = () => {
   const navigate = useNavigate();
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(false);
   const [applications, setApplications] = useState([]);
   const [error, setError] = useState(null);
-  const [filteredApplications, setFilteredApplications] = useState([]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -33,15 +32,6 @@ const Applications = () => {
     };
     fetchProjects();
   }, []);
-
-  useEffect(() => {
-    const filtered = applications.filter((project) =>
-      Object.values(project).some((value) =>
-        value.toString().toLowerCase().includes(searchText.toLowerCase())
-      )
-    );
-    setFilteredApplications(filtered);
-  }, [searchText, applications]);
 
   const handleOnClick = (projectId: string) => {
     navigate(`/applications/${projectId}`);
@@ -67,16 +57,14 @@ const Applications = () => {
           <div className="w-full h-full bg-white rounded-lg flex items-center justify-center">
             <LoadingIcon />
           </div>
-        ) : applications.length > 0 ? (
+        ) : (
           <ProjectsTable
             handleOnClick={handleOnClick}
-            data={filteredApplications}
+            data={applications}
             acceptData={['_id', 'name', 'applicant.registeredName']}
             projectIdField="_id"
             searchText={searchText}
           />
-        ) : (
-          <EmptyState title="Nothing to display" icon={faMeh} />
         )}
       </div>
     </div>
