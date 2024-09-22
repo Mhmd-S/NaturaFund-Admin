@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 
 import { normalizeCamelCase } from '@utils/extractHeader';
 
@@ -11,10 +11,12 @@ type ProjectsTableProps = {
   acceptData?: string[];
   projectIdField: string;
   searchText: string;
+  handleOnClick: (projectId: string) => void;
 };
 
 const ProjectsTable = ({
   data,
+  handleOnClick,
   ignoreData,
   acceptData,
   projectIdField,
@@ -22,8 +24,6 @@ const ProjectsTable = ({
 }: ProjectsTableProps) => {
   const [sortedData, setSortedData] = useState(data);
   const [sortOrder, setSortOrder] = useState('asc');
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const filteredData = data.filter((item) =>
@@ -33,10 +33,6 @@ const ProjectsTable = ({
     );
     setSortedData(filteredData);
   }, [searchText, data]);
-
-  const handleOnClick = (projectId: string) => {
-    navigate(`/projects/${projectId}`);
-  };
 
   const handleSort = (header) => {
     const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';

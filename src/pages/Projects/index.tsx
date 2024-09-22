@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ProjectsTable from '@components/common/ProjectsTable';
 import SearchBar from '@components/common/SearchBar';
 import LoadingIcon from '@components/common/LoadingIcon';
 import EmptyState from '@components/common/EmptyState';
 
-import { useAuthContext } from '@context/AuthContext';
-
 import * as projectApi from '@api/project';
 
 import { faMeh } from '@fortawesome/free-solid-svg-icons';
 
 const Projects = () => {
-  const { state } = useAuthContext();
+  const navigate = useNavigate();
 
   const [searchText, setSearchText] = useState('');
   const [projects, setProjects] = useState([]);
@@ -32,6 +31,10 @@ const Projects = () => {
     };
     fetchProjects();
   }, []);
+
+  const handleOnClick = (projectId: string) => {
+    navigate(`/projects/${projectId}`);
+  };
 
   return (
     <div className="w-full p-6 bg-gray-300/25 overflow-y-auto">
@@ -57,6 +60,7 @@ const Projects = () => {
         ) : projects.length > 0 ? (
           <ProjectsTable
             data={projects}
+            handleOnClick={handleOnClick}
             acceptData={['_id', 'name', '', 'projectStatus', 'type']}
             projectIdField="_id"
             searchText={searchText}
