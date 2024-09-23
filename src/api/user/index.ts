@@ -28,7 +28,7 @@ export const updateUser = async (updateData) => {
     const response = await api.request({
       method: 'PUT',
       url: `user/${updateData._id}`,
-      data: updateData,
+      data: { verified: updateData.verified},
     });
 
     const { status, data } = response;

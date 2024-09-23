@@ -38,7 +38,7 @@ export default ({ mode }) => {
 			},
 		},
 		server: {
-			port: 3000,
+			port: 3002,
 			// headers: {
 			//   'Content-Type': 'application/javascript'
 			// },

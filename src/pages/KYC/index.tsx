@@ -47,7 +47,7 @@ const KYC = () => {
   return (
     <div className="w-full p-6 bg-gray-300/25 overflow-y-auto">
       <div className="h-screen flex flex-col gap-6">
-        <div className="flex justify-between items-center p-4 bg-white rounded-2xl">
+        <div className="  flex justify-between items-center p-4 bg-white rounded-2xl">
           <p className="text-lg font-bold text-brand-900">KYC Users</p>
           <div className="w-1/3">
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
@@ -57,7 +57,7 @@ const KYC = () => {
         <ProjectsTable
           data={filteredUsers}
           handleOnClick={handleOnClick}
-          acceptData={['_id', 'email', 'verification']}
+          acceptData={['_id', 'email', 'verification', 'verified', 'updatedAt']}
           projectIdField="_id"
           searchText={searchText}
           loading={loading}

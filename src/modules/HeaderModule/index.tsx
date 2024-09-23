@@ -9,10 +9,6 @@ const Header = () => {
         <FontAwesomeIcon icon={faLeaf} className="text-brand-900 text-3xl" />
         <span className="text-2xl font-semibold text-brand-900">NaturaFund</span>
       </div>
-      <div className="p-1 text-xs flex items-center hover:bg-gray-200 rounded-lg transition-color cursor-pointer">
-        <FontAwesomeIcon icon={faFlag} className="size-4 text-gray-600 p-2" />
-        <p>Feedback</p>
-      </div>
     </div>
   );
 };
