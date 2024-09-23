@@ -1,40 +1,22 @@
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-
-import { useNavigate } from 'react-router-dom';
-
-import { FormWrapper, FormSelect, FormButton } from '@/forms/FormComponents';
-import DetailsTable from '@/components/common/DetailsTable';
-import MediaTable from '@/components/common/MediaTable';
-import FontAwesome from 'react-fontawesome';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FormWrapper, FormSelect, FormButton } from '@forms/FormComponents';
+import DetailsTable from '@components/common/DetailsTable';
+import LoadingIcon from '@components/common/LoadingIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-
-const DUMMYAPPLICATION = {
-  id: 1,
-  identity: {
-    name: 'John Smith',
-    dob: '31/12/2001',
-    expiration: '21/12/2024',
-    number: '018295744',
-  },
-  date_submitted: '21/12/2001',
-  status: 'Action Required',
-  type: 'company',
-  selfie_image: 'https://picsum.photos/200/300',
-  document: {
-    extracted_info: {
-      name: 'John Smith',
-      dob: '31/12/2001',
-      expiration: '21/12/2024',
-      number: '018295744',
-    },
-    document_image: 'https://picsum.photos/200/300',
-  },
-  result: 'Verified Successfully 99.8%',
-};
+import * as userApi from '@api/user';
+import * as kycApi from '@api/kyc';
 
 const KycDetails = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [user, setUser] = useState(null);
+  const [kyc, setKyc] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<String | null>(null);
 
   const {
     register,
@@ -42,11 +24,23 @@ const KycDetails = () => {
     formState: { isDirty, isValid, errors },
   } = useForm();
 
-  const getTableData = () => {
-    const companyDetails = DUMMYAPPLICATION.project;
-    const { name, owner, description, ...rest } = companyDetails;
-    return rest;
-  };
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const userResponse = await userApi.getUser(id);
+        setUser(userResponse.data);
+
+        const kycResponse = await kycApi.getKycDetails(id);
+        setKyc(kycResponse.data);
+
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+    fetchDetails();
+  }, []);
 
   const handleGoBack = () => {
     navigate(-1); // Goes back one step in the history stack
@@ -56,12 +50,27 @@ const KycDetails = () => {
     console.log(data);
   };
 
+  if (loading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <LoadingIcon />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
-      <div className=" p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
+      <div className="p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
         <h2 className="text-3xl py-4 font-bold sm:text-4xl flex flex-col space-y-1">
           <span className="flex items-center gap-4">
-            {' '}
             <FontAwesomeIcon
               icon={faChevronLeft}
               className="size-5 cursor-pointer"
@@ -69,11 +78,11 @@ const KycDetails = () => {
             />
             KYC Verification
           </span>
-          <span className=" text-gray-600 text-sm font-normal">
-            Submitted: <strong>{DUMMYAPPLICATION.date_submitted}</strong>
+          <span className="text-gray-600 text-sm font-normal">
+            Submitted: <strong>{user.date_submitted}</strong>
           </span>
-          <span className=" text-gray-600 text-sm font-normal">
-            Accuracy: <strong>99.8%</strong>
+          <span className="text-gray-600 text-sm font-normal">
+            Accuracy: <strong>{kyc.accuracy_rate}%</strong>
           </span>
         </h2>
 
@@ -84,8 +93,8 @@ const KycDetails = () => {
               label="Status"
               name="status"
               labelShow={false}
-              options={['Awaiting Action', 'In Progress', 'Completed']}
-              defaultValue={DUMMYAPPLICATION.status}
+              options={['Reject', 'Approve', 'Pending']}
+              defaultValue={user.status}
               register={register}
               validationRules={{
                 require: 'Status is required',
@@ -97,18 +106,13 @@ const KycDetails = () => {
 
         <div>
           <h2 className="text-3xl py-4 font-semibold">User Info</h2>
-          <DetailsTable items={DUMMYAPPLICATION.identity} />
-        </div>
-
-        <div>
-          <h2 className="text-3xl py-4 font-semibold">Extracted Info</h2>
-          <DetailsTable items={DUMMYAPPLICATION.document.extracted_info} />
+          <DetailsTable items={} />
         </div>
 
         <div>
           <h2 className="text-3xl py-4 font-semibold">Selfie Image</h2>
           <img
-            src={DUMMYAPPLICATION.document.document_image}
+            src={user.document.selfie_image}
             alt="Selfie Image"
             className="object-cover object-center"
           />
@@ -117,8 +121,8 @@ const KycDetails = () => {
         <div>
           <h2 className="text-3xl py-4 font-semibold">Document Image</h2>
           <img
-            src={DUMMYAPPLICATION.document.document_image}
-            alt="Selfie Image"
+            src={user.document.document_image}
+            alt="Document Image"
             className="object-cover object-center"
           />
         </div>
