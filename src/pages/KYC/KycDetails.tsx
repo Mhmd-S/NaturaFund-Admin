@@ -57,6 +57,7 @@ const KycDetails = () => {
       const kycResponse = await kycApi.updateKyc({
         _id: kyc._id,
         status: data.verified,
+        reason: data.reason,
       });
 
       // Update user status
