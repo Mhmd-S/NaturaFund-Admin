@@ -81,7 +81,7 @@ export const acceptApplication = async (id: string) => {
     try {
         const response = await api.request({
             method: "POST",
-            url: `application/${id}/accept`,
+            url: `application/${id}/approve`,
         });
 
         const { status, data } = response;

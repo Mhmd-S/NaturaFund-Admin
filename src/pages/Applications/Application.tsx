@@ -49,18 +49,42 @@ const Application = () => {
     navigate(-1); // Goes back one step in the history stack
   };
 
-  const onSubmit = (formData) => {
+  const onSubmit = async (formData) => {
     // Check what type os status is being updated. If it is 'Completed', then call the acceptApplication function
-    if (data.status === 'Completed') {
-      acceptApplication(id);
-    } else {
-      updateApplication(id, formData);
+    setLoading(true);
+    try {
+      let response;
+      if (formData.status === 'approved') {
+        response = await acceptApplication(id);
+      } else {
+        response = await updateApplication(id, formData);
+      }
+
+      const { status, data } = response;
+
+      if (status === 'success') {
+        setApplication(data);
+        setIsSuccess(true);
+      }
+    } catch (error) {
+      setUpdateError(error);
     }
+    setLoading(false);
+  };
+
+  const projectLocation = {
+    country: application.country,
+    address: application.address,
   };
 
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
-      <div className=" p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
+      <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
+        {isSuccess && (
+          <div className="col-span-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+            <strong className="font-bold">Success!</strong> Application has been updated.
+          </div>
+        )}
         {loading ? (
           <LoadingIcon />
         ) : (
@@ -80,14 +104,14 @@ const Application = () => {
               </span>
             </h2>
 
-            <FormWrapper loading={false} onSubmit={handleSubmit(onSubmit)}>
+            <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-[50%_20%] gap-4 pt-5 justify-center">
                 <FormSelect
                   errors={errors}
                   label="Status"
                   name="status"
                   labelShow={false}
-                  options={['Awaiting Action', 'In Progress', 'Completed', 'On Hold']}
+                  options={['pending', 'approved', 'rejected']}
                   defaultValue={application.status}
                   register={register}
                   validationRules={{
@@ -98,19 +122,14 @@ const Application = () => {
               </div>
             </FormWrapper>
 
-            <div>
+            <div className="col-span-2">
               <h2 className="text-3xl py-4 font-semibold">Project Description</h2>
               <p>{application.description}</p>
             </div>
 
             <div>
-              <h2 className="text-3xl py-4 font-semibold">Project Details</h2>
-              <DetailsTable
-                items={[
-                  { label: 'Country', value: application.country },
-                  { label: 'Address', value: application.address },
-                ]}
-              />
+              <h2 className="text-3xl py-4 font-semibold">Project Location</h2>
+              <DetailsTable items={projectLocation} />
             </div>
 
             <div>

@@ -18,9 +18,7 @@ const KYC = () => {
       try {
         setLoading(true);
         const response = await userApi.getUsers();
-        const unverifiedUsers = response.data.filter(
-          (user) => user.verified === 'pending' || user.verified === 'not verified'
-        );
+        const unverifiedUsers = response.data.filter((user) => user.verified !== 'verified');
         setUsers(unverifiedUsers);
         setLoading(false);
       } catch (error) {
