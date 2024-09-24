@@ -41,7 +41,7 @@ const UserDetails = () => {
       }
     };
     fetchUserDetails();
-  }, [id]);
+  }, [id, suspending]);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -50,8 +50,8 @@ const UserDetails = () => {
   const handleSuspendUser = async () => {
     setSuspending(true);
     try {
-      await userApi.updateUser({ ...user, suspended: true });
-      setUser((prevUser) => ({ ...prevUser, suspended: true }));
+      await userApi.updateUser({ ...user, suspended: !user.suspended });
+      setUser((prevUser) => ({ ...prevUser, suspended: !user.suspended }));
     } catch (error) {
       setError(error);
     } finally {
@@ -63,9 +63,26 @@ const UserDetails = () => {
     navigate(`/projects/${projectId}`);
   };
 
+  const userItems = () => {
+    const {
+      password,
+      selfieId,
+      frontId,
+      backId,
+      createdAt,
+      updatedAt,
+      addressProof,
+      representative,
+      __v,
+      verified,
+      ...rest
+    } = user;
+    return rest;
+  };
+
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
-      <div className="p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
+      <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
         {loading ? (
           <LoadingIcon />
         ) : (
@@ -81,10 +98,17 @@ const UserDetails = () => {
               </span>
             </h2>
 
-            <DetailsTable title="User Details" items={user} />
+            <DetailsTable title="User Details" items={userItems()} />
             <DetailsTable title="Investments" items={investments} />
 
-            {user.userType === 'corporation' && (
+            {user.userType == 'Corporation' && (
+              <div className="col-span-2">
+                <h2 className="text-3xl py-4 font-semibold">Representative Info</h2>
+                <DetailsTable items={JSON.parse(user.representative)} />
+              </div>
+            )}
+
+            {user.userType === 'Corporation' && (
               <div className="col-span-2">
                 <DetailsTable title="Projects" items={projects} />
                 <div className="flex flex-col gap-2">
@@ -101,11 +125,11 @@ const UserDetails = () => {
               </div>
             )}
 
-            <div className="col-span-2 flex justify-end">
+            <div className="col-span-2 flex justify-end justify-self-end self-end">
               <button
                 onClick={handleSuspendUser}
                 disabled={suspending || user.suspended}
-                className={`px-4 py-2 border-[1px] border-red-600 rounded-lg text-white bg-red-600 transition-all hover:bg-white hover:text-red-600 ${
+                className={`h-fit px-4 py-2 border-[1px] border-red-600 rounded-lg text-white bg-red-600 transition-all hover:bg-white hover:text-red-600 ${
                   suspending || user.suspended ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >

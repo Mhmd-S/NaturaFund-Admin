@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
-import { FormWrapper, FormSelect, FormButton } from '@forms/FormComponents';
+import { Form, useNavigate, useParams } from 'react-router-dom';
+import { FormWrapper, FormSelect, FormButton, FormField } from '@forms/FormComponents';
 import DetailsTable from '@components/common/DetailsTable';
 import LoadingIcon from '@components/common/LoadingIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import * as userApi from '@api/user';
 import * as kycApi from '@api/kyc';
+import FormFieldTextArea from '@forms/FormComponents/FormTextArea';
 
 const KycDetails = () => {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ const KycDetails = () => {
       createdAt,
       updatedAt,
       addressProof,
+      representative,
       __v,
       verified,
       ...rest
@@ -104,7 +106,7 @@ const KycDetails = () => {
           </div>
         ) : (
           <>
-            <h2 className="text-3xl py-4 font-bold sm:text-4xl flex flex-col space-y-1">
+            <h2 className="col-span-2 text-3xl py-4 font-bold sm:text-4xl flex flex-col space-y-1">
               <span className="flex items-center gap-4">
                 <FontAwesomeIcon
                   icon={faChevronLeft}
@@ -122,33 +124,15 @@ const KycDetails = () => {
               </span>
             </h2>
 
-            <FormWrapper loading={false} onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid grid-cols-[50%_20%] justify-center gap-4 pt-5">
-                <FormSelect
-                  errors={errors}
-                  label="Status"
-                  name="verified"
-                  labelShow={false}
-                  options={['rejected', 'verified', 'pending']}
-                  defaultValue={user.verified}
-                  register={register}
-                  validationRules={{
-                    require: 'Status is required',
-                  }}
-                />
-                <FormButton text="Save" type="submit" disable={!isDirty || !isValid} />
-              </div>
-            </FormWrapper>
-
             <div className="col-span-2">
               <h2 className="text-3xl py-4 font-semibold">User Info</h2>
               <DetailsTable items={userItems()} />
             </div>
 
-            {user.userType == 'corporation' && (
+            {user.userType == 'Corporation' && (
               <div className="col-span-2">
-                <h2 className="text-3xl py-4 font-semibold">User Info</h2>
-                <DetailsTable items={user.representative} />
+                <h2 className="text-3xl py-4 font-semibold">Representative Info</h2>
+                <DetailsTable items={JSON.parse(user.representative)} />
               </div>
             )}
 
@@ -169,6 +153,42 @@ const KycDetails = () => {
                 className="object-cover object-center"
               />
             </div>
+
+            <span className='w-full pt-4 col-span-2'>
+              <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
+                <h2 className="text-3xl font-semibold">KYC Action</h2>
+                <div className="w-full grid grid-cols-1 justify-center gap-4 pt-5">
+                  <FormSelect
+                    errors={errors}
+                    label="Status"
+                    name="verified"
+                    options={['rejected', 'verified', 'pending']}
+                    defaultValue={user.verified}
+                    register={register}
+                    validationRules={{
+                      require: 'Status is required',
+                    }}
+                    labelShow
+                  />
+                  <span className="col-span-2">
+                    <FormFieldTextArea
+                      rows={3}
+                      label="Reason"
+                      name="reason"
+                      type="text"
+                      errors={errors}
+                      defaultValue={kyc.reason}
+                      placeholder="Reason for rejection"
+                      register={register}
+                      validationRules={{
+                        required: 'Reason is required',
+                      }}
+                    />
+                  </span>
+                  <FormButton text="Save" type="submit" disable={!isDirty || !isValid} />
+                </div>
+              </FormWrapper>
+            </span>
           </>
         )}
       </div>

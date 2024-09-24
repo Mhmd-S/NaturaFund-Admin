@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faMeh } from '@fortawesome/free-solid-svg-icons';
 
 import { normalizeCamelCase } from '@utils/extractHeader';
 import LoadingIcon from '@components/common/LoadingIcon';
+import EmptyState from '@components/common/EmptyState';
 
 type ProjectsTableProps = {
   data: any[];
@@ -56,7 +57,7 @@ const ProjectsTable = ({
           <LoadingIcon />
         </div>
       ) : sortedData.length === 0 ? (
-        <div className="text-center text-gray-500 py-10">No data available</div>
+        <EmptyState title="Nothing to display" icon={faMeh} />
       ) : (
         <table className="h-full w-full divide-y-2 divide-gray-200 text-sm">
           <thead>
