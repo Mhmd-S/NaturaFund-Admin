@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { set, useFieldArray, useForm } from 'react-hook-form';
 
-import { faMehRollingEyes, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMeh, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { TableFormProps } from '@types/FormComponentsTypes';
 
@@ -126,8 +126,8 @@ const TableForm = ({ project, category, name, defaultValues }: TableFormProps) =
           renderFields()
         ) : (
           <EmptyState
-            title="This table is empty!"
-            icon={faMehRollingEyes}
+            title="This table is empty! Please add a field."
+            icon={faMeh}
             handleClick={() => append({ label: '', value: '' })}
           />
         )}

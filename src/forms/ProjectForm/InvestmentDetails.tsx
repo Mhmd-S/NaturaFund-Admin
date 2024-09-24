@@ -23,14 +23,14 @@ const InvestmentDetails = ({ project }) => {
   const onSubmit = async (formData) => {
     try {
       setLoading(true);
-      const invesmentDetails = {
+      const investmentDetails = {
         description: formData.description,
         type: formData.type,
-        features: project.investmentDetails.features,
+        features: project?.investmentDetails?.features || [],
       };
 
       const response = await projectApi.updateProject(project._id, {
-        investmentDetails: invesmentDetails,
+        investmentDetails: investmentDetails,
       });
 
       const { status } = response;
@@ -64,7 +64,7 @@ const InvestmentDetails = ({ project }) => {
           rows={5}
           name="description"
           label="Investment Description"
-          defaultValue={project.investmentDetails.description}
+          defaultValue={project?.investmentDetails?.description || ''}
           register={register}
           errors={errors}
           placeholder="ex. This project aims to..."
@@ -87,7 +87,7 @@ const InvestmentDetails = ({ project }) => {
           name="type"
           register={register}
           errors={errors}
-          defaultValue={project.investmentDetails.type}
+          defaultValue={project?.investmentDetails?.type || ''}
           validationRules={{
             required: 'Investment Vehicle is required',
           }}
@@ -98,7 +98,7 @@ const InvestmentDetails = ({ project }) => {
         project={project}
         category="investmentDetails"
         name="features"
-        defaultValues={project.investmentDetails.features}
+        defaultValues={project?.investmentDetails?.features || ''}
       />
     </>
   );

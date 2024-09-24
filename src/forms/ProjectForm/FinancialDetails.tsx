@@ -4,55 +4,57 @@ import { useForm } from 'react-hook-form';
 import TableForm from '@forms/FormComponents/TablesForm';
 
 const FinancialDetails = ({ project }) => {
+  const financialDetails = project?.financialDetails || {};
+
   return (
     <div className="divide-y-2 flex flex-col gap-12">
       <TableForm
         project={project}
         category="financialDetails"
         name="timeline"
-        defaultValues={project.financialDetails.timeline}
+        defaultValues={financialDetails.timeline}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="allocation"
-        defaultValues={project.financialDetails.allocation}
+        defaultValues={financialDetails.allocation}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="useOfProceeds"
-        defaultValues={project.financialDetails.useOfProceeds}
+        defaultValues={financialDetails.useOfProceeds}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="revenueForecast"
-        defaultValues={project.financialDetails.revenueForecast}
+        defaultValues={financialDetails.revenueForecast}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="NPV"
-        defaultValues={project.financialDetails.NPV}
+        defaultValues={financialDetails.NPV}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="IRR"
-        defaultValues={project.financialDetails.IRR}
+        defaultValues={financialDetails.IRR}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="breakEven"
-        defaultValues={project.financialDetails.breakEven}
+        defaultValues={financialDetails.breakEven}
       />
       <TableForm
         project={project}
         category="financialDetails"
         name="riskAnalysis"
-        defaultValues={project.financialDetails.riskAnalysis}
+        defaultValues={financialDetails.riskAnalysis}
       />
     </div>
   );
