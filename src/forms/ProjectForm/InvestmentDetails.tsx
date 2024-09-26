@@ -9,7 +9,7 @@ import TableForm from '@forms/FormComponents/TablesForm';
 
 import * as projectApi from '@api/project';
 
-const InvestmentDetails = ({ project }) => {
+const InvestmentDetails = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -26,6 +26,7 @@ const InvestmentDetails = ({ project }) => {
       const investmentDetails = {
         description: formData.description,
         type: formData.type,
+        energyType: formData.energyType,  
         features: project?.investmentDetails?.features || [],
       };
 
@@ -36,6 +37,7 @@ const InvestmentDetails = ({ project }) => {
       const { status } = response;
 
       if (status === 'success') {
+        setProject(response.data);
         setIsSuccess(true);
       } else {
         setUpdateError('An error occurred, please try again.');
@@ -92,10 +94,22 @@ const InvestmentDetails = ({ project }) => {
             required: 'Investment Vehicle is required',
           }}
         />
+        <FormSelect
+          options={['Solar', 'Hydro', 'Wind', 'Biomass']}
+          label="Investment Energy Type"
+          name="energyType"
+          register={register}
+          errors={errors}
+          defaultValue={project?.investmentDetails?.type || ''}
+          validationRules={{
+            required: 'Investment Vehicle is required',
+          }}
+        />
         <FormButton text="Save Changes" type="submit" />
       </FormWrapper>
       <TableForm
         project={project}
+        setProject={setProject}
         category="investmentDetails"
         name="features"
         defaultValues={project?.investmentDetails?.features || ''}

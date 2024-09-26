@@ -20,7 +20,7 @@ type FormSubmitParams = {
   [key: string]: { label: string; value: string }[];
 };
 
-const TableForm = ({ project, category, name, defaultValues }: TableFormProps) => {
+const TableForm = ({ project, setProject, category, name, defaultValues }: TableFormProps) => {
   const [loading, setLoading] = useState(false);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -60,6 +60,7 @@ const TableForm = ({ project, category, name, defaultValues }: TableFormProps) =
       const response = await projectApi.updateProject(project._id, { [category]: objectToSend });
 
       if (response?.status === 'success') {
+        setProject(response.data);
         setIsSuccess(true);
       } else {
         setUpdateError('An error occurred, please try again.');
@@ -122,7 +123,7 @@ const TableForm = ({ project, category, name, defaultValues }: TableFormProps) =
             <FormButton text="Save Table" type="submit" />
           </span>
         </div>
-        {defaultValues ? (
+        {fields.length > 0 ? (
           renderFields()
         ) : (
           <EmptyState

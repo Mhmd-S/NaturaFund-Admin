@@ -9,7 +9,7 @@ import * as projectApi from '@api/project';
 
 const STATUSES = ['Planning', 'Funding', 'Execution', 'Electricity Generated'];
 
-const Status = ({ project }) => {
+const Status = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -27,6 +27,7 @@ const Status = ({ project }) => {
       const { status } = response;
 
       if (status === 'success') {
+        setProject(response.data);
         setIsSuccess(true);
       } else {
         setUpdateError('An error occurred, please try again.');

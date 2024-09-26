@@ -39,11 +39,11 @@ const Project = () => {
       case 'overview':
         return <Overview project={project} setProject={setProject} />;
       case 'Financial Details':
-        return <FinancialDetails project={project} />;
+        return <FinancialDetails project={project} setProject={setProject} />;
       case 'Investment Details':
-        return <InvestmentDetails project={project} />;
+        return <InvestmentDetails project={project} setProject={setProject} />;
       case 'Status':
-        return <Status project={project} />;
+        return <Status project={project} setProject={setProject} />;
       case 'Documents':
         return <Documents project={project} setProject={setProject} />;
       default:
