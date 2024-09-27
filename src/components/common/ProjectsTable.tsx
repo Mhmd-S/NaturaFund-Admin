@@ -51,7 +51,7 @@ const ProjectsTable = ({
   };
 
   return (
-    <div className=" p-4 bg-white rounded-2xl">
+    <div className="h-full p-4 bg-white rounded-2xl">
       {loading ? (
         <div className="text-center text-gray-500 py-10">
           <LoadingIcon />
@@ -61,7 +61,7 @@ const ProjectsTable = ({
           <EmptyState title="Nothing to display" icon={faMeh} />
         </div>
       ) : (
-        <table className="min-h-full w-full divide-y-2 divide-gray-200 text-sm">
+        <table className="w-full divide-y-2 divide-gray-200 text-sm">
           <thead>
             <tr>
               {data[0] &&
