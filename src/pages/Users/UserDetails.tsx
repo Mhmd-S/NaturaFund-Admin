@@ -12,7 +12,6 @@ const UserDetails = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
-  const [investments, setInvestments] = useState([]);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<String | null>(null);
@@ -25,9 +24,6 @@ const UserDetails = () => {
       try {
         const userResponse = await userApi.getUser(id);
         setUser(userResponse.data);
-
-        const investmentsResponse = await investmentApi.getInvestmentsByInvestor(id);
-        setInvestments(investmentsResponse.data);
 
         if (userResponse.data.userType === 'corporation') {
           const projectsResponse = await projectApi.getProjecstByCorporation(id);
@@ -82,7 +78,7 @@ const UserDetails = () => {
 
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
-      <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
+      <div className="min-h-screen p-4 grid grid-cols-1 gap-3 bg-white rounded-3xl">
         {loading ? (
           <LoadingIcon />
         ) : (
@@ -99,7 +95,6 @@ const UserDetails = () => {
             </h2>
 
             <DetailsTable title="User Details" items={userItems()} />
-            <DetailsTable title="Investments" items={investments} />
 
             {user.userType == 'Corporation' && (
               <div className="col-span-2">
