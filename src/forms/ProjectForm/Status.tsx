@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+
 import FormButton from '@forms/FormComponents/FormButton';
 import FormWrapper from '@forms/FormComponents/FormWrapper';
 import FormSelect from '@forms/FormComponents/FormSelect';
 import FormFieldTextArea from '@forms/FormComponents/FormTextArea';
+
+import SuccessMessage from '@components/common/SuccessMessage';
 
 import * as projectApi from '@api/project';
 
@@ -42,9 +45,7 @@ const Status = ({ project, setProject }) => {
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)} loading={loading}>
       {isSuccess && (
-        <div className="bg-green-200 border-green-400 border-l-4 p-4 mb-4">
-          <p className="text-green-700">Project Updated Successfully!</p>
-        </div>
+        <SuccessMessage message="Status updated successfully" />
       )}
       {updateError && (
         <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">

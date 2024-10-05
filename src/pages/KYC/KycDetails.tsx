@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
 import { Form, useNavigate, useParams } from 'react-router-dom';
+
 import { FormWrapper, FormSelect, FormButton, FormField } from '@forms/FormComponents';
+import FormFieldTextArea from '@forms/FormComponents/FormTextArea';
+
 import DetailsTable from '@components/common/DetailsTable';
 import LoadingIcon from '@components/common/LoadingIcon';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
 import * as userApi from '@api/user';
 import * as kycApi from '@api/kyc';
-import FormFieldTextArea from '@forms/FormComponents/FormTextArea';
+import SuccessMessage from '@components/common/SuccessMessage';
 
 const KycDetails = () => {
   const navigate = useNavigate();
@@ -23,8 +28,11 @@ const KycDetails = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { isDirty, isValid, errors },
   } = useForm();
+
+  const reasonField = watch('verified', 'rejected');
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -52,7 +60,7 @@ const KycDetails = () => {
     try {
       setLoading(true);
       setError(null);
-
+      console.log(data);
       // Update KYC status
       const kycResponse = await kycApi.updateKyc({
         _id: kyc._id,
@@ -94,11 +102,7 @@ const KycDetails = () => {
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
       <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
-        {success && (
-          <div className="col-span-2 h-fit bg-green-200 border-green-400 border-l-4 p-4 mb-4">
-            <p className="text-green-700">Updated Successfully!</p>
-          </div>
-        )}
+        {success && <SuccessMessage message="KYC updated successfully" />}
         {loading ? (
           <LoadingIcon />
         ) : error ? (
@@ -155,7 +159,7 @@ const KycDetails = () => {
               />
             </div>
 
-            <span className='w-full pt-4 col-span-2'>
+            <span className="w-full pt-4 col-span-2">
               <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="text-3xl font-semibold">KYC Action</h2>
                 <div className="w-full grid grid-cols-1 justify-center gap-4 pt-5">
@@ -172,19 +176,21 @@ const KycDetails = () => {
                     labelShow
                   />
                   <span className="col-span-2">
-                    <FormFieldTextArea
-                      rows={3}
-                      label="Reason"
-                      name="reason"
-                      type="text"
-                      errors={errors}
-                      defaultValue={kyc.reason}
-                      placeholder="Reason for rejection"
-                      register={register}
-                      validationRules={{
-                        required: 'Reason is required',
-                      }}
-                    />
+                    {reasonField === 'rejected' && (
+                      <FormFieldTextArea
+                        rows={3}
+                        label="Reason"
+                        name="reason"
+                        type="text"
+                        errors={errors}
+                        defaultValue={kyc.reason}
+                        placeholder="Insert note here or rejection reason if rejecting."
+                        register={register}
+                        validationRules={{
+                          required: 'Reason is required',
+                        }}
+                      />
+                    )}
                   </span>
                   <FormButton text="Save" type="submit" disable={!isDirty || !isValid} />
                 </div>

@@ -7,6 +7,8 @@ import FormSelect from '@forms/FormComponents/FormSelect';
 import FormButton from '@forms/FormComponents/FormButton';
 import TableForm from '@forms/FormComponents/TablesForm';
 
+import SuccessMessage from '@components/common/SuccessMessage';
+
 import * as projectApi from '@api/project';
 
 const InvestmentDetails = ({ project, setProject }) => {
@@ -53,9 +55,7 @@ const InvestmentDetails = ({ project, setProject }) => {
     <>
       <FormWrapper onSubmit={handleSubmit(onSubmit)} loading={loading}>
         {isSuccess && (
-          <div className="bg-green-200 border-green-400 border-l-4 p-4 mb-4">
-            <p className="text-green-700">Updated Project Successfully!</p>
-          </div>
+          <SuccessMessage message="Investment Details updated successfully" />
         )}
         {updateError && (
           <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
@@ -100,7 +100,7 @@ const InvestmentDetails = ({ project, setProject }) => {
           name="energyType"
           register={register}
           errors={errors}
-          defaultValue={project?.investmentDetails?.type || ''}
+          defaultValue={project?.investmentDetails?.energyType || ''}
           validationRules={{
             required: 'Investment Vehicle is required',
           }}

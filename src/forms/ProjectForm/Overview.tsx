@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import DetailsTable from '@components/common/DetailsTable';
-
 import FormWrapper from '@forms/FormComponents/FormWrapper';
 import FormTextArea from '@forms/FormComponents/FormTextArea';
 import FileUploadField from '@forms/FormComponents/FormFileUpload';
@@ -19,11 +17,18 @@ const Overview = ({ project, setProject }) => {
   const {
     register,
     handleSubmit,
+    reset,
     resetField,
     clearErrors,
     setError,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: project.name,
+      description: project.description,
+      image: project.image,
+    },
+  });
 
   const onSubmit = async (formData) => {
     setLoading(true);
@@ -40,11 +45,17 @@ const Overview = ({ project, setProject }) => {
     try {
       const response = await projectApi.updateProject(project._id, formDataToSend);
 
-      const { status, data  } = response;
+      const { status, data } = response;
 
       if (status === 'success') {
         setProject(data);
         setIsSuccess(true);
+        // Reset the form with the updated project data
+        reset({
+          name: data.name,
+          description: data.description,
+          image: data.image,
+        });
       } else {
         setUpdateError('An error occurred, please try again.');
       }

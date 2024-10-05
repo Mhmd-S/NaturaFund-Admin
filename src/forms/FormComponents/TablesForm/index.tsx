@@ -15,6 +15,7 @@ import * as projectApi from '@api/project';
 import LoadingIcon from '@components/common/LoadingIcon';
 
 import { normalizeCamelCase } from '@utils/extractHeader';
+import SuccessMessage from '@components/common/SuccessMessage';
 
 type FormSubmitParams = {
   [key: string]: { label: string; value: string }[];
@@ -98,11 +99,7 @@ const TableForm = ({ project, setProject, category, name, defaultValues }: Table
 
   return (
     <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
-      {isSuccess && (
-        <div className="bg-green-200 border-green-400 border-l-4 p-4 mb-4">
-          <p className="text-green-700">Updated Project Successfully!</p>
-        </div>
-      )}
+      {isSuccess && <SuccessMessage message="Table updated successfully" />}
       {updateError && (
         <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
           <p className="text-red-700">{updateError}</p>

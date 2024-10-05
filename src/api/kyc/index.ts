@@ -29,7 +29,7 @@ export const updateKyc = async (kycData: any) => {
     const response = await api.request({
       method: 'PUT',
       url: `kyc/${kycData._id}`,
-      data: { status: kycData.status },
+      data: { status: kycData.status, reason: kycData.reason },
     });
 
     const { status, data } = response;

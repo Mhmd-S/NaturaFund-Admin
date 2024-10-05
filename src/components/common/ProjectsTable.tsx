@@ -53,7 +53,7 @@ const ProjectsTable = ({
   return (
     <div className="h-full p-4 bg-white rounded-2xl">
       {loading ? (
-        <div className="text-center text-gray-500 py-10">
+        <div className="w-full h-full text-center text-gray-500 py-10">
           <LoadingIcon />
         </div>
       ) : sortedData.length === 0 ? (
@@ -89,7 +89,10 @@ const ProjectsTable = ({
                   {Object.entries(dataEntry).map(([key, value], index) => {
                     if (ignoreData?.includes(key)) return null;
                     if (acceptData && !acceptData.includes(key)) return null;
-                    console.log(value);
+                    if (key === "createAt" || key === "updatedAt") {
+                      const date = new Date(value);
+                      value = date.toDateString();
+                    }
                     return (
                       <td key={index} className="px-4 py-2 whitespace-nowrap text-gray-900">
                         {value}

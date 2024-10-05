@@ -5,6 +5,7 @@ import FormWrapper from '@forms/FormComponents/FormWrapper';
 import FormButton from '@forms/FormComponents/FormButton';
 
 import * as projectApi from '@api/project';
+import SuccessMessage from '@components/common/SuccessMessage';
 
 const Documents = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
@@ -49,9 +50,7 @@ const Documents = ({ project, setProject }) => {
   return (
     <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
       {isSuccess && (
-        <div className="bg-green-200 border-green-400 border-l-4 p-4 mb-4">
-          <p className="text-green-700">Updated Project Successfully!</p>
-        </div>
+<SuccessMessage message="Documents updated successfully" />
       )}
       {updateError && (
         <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">

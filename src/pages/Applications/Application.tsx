@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { getApplication, updateApplication, acceptApplication } from '@api/application';
+import SuccessMessage from '@components/common/SuccessMessage';
 
 const Application = () => {
   const navigate = useNavigate();
@@ -81,9 +82,7 @@ const Application = () => {
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
       <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
         {isSuccess && (
-          <div className="col-span-2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
-            <strong className="font-bold">Success!</strong> Application has been updated.
-          </div>
+          <SuccessMessage message="Application updated successfully" />
         )}
         {loading ? (
           <LoadingIcon />

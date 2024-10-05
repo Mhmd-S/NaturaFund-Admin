@@ -58,7 +58,7 @@ const Projects = () => {
           <ProjectsTable
             data={projects}
             handleOnClick={handleOnClick}
-            acceptData={['_id', 'name', '', 'projectStatus', 'type']}
+            acceptData={['_id', 'name', 'projectStatus', 'type']}
             projectIdField="_id"
             searchText={searchText}
             loading={loading}
