@@ -5,12 +5,10 @@ import FormWrapper from '@forms/FormComponents/FormWrapper';
 import FormButton from '@forms/FormComponents/FormButton';
 
 import * as projectApi from '@api/project';
-import SuccessMessage from '@components/common/SuccessMessage';
+ import { toast } from 'react-toastify';
 
 const Documents = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
-  const [updateError, setUpdateError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   const {
     register,
@@ -20,7 +18,6 @@ const Documents = ({ project, setProject }) => {
 
   const onSubmit = async (formData) => {
     setLoading(true);
-    setUpdateError(null);
 
     // Create a FormData object
     const formDataToSend = new FormData();
@@ -36,12 +33,12 @@ const Documents = ({ project, setProject }) => {
 
       if (status === 'success') {
         setProject(data);
-        setIsSuccess(true);
+        toast.success('Documents updated successfully');
       } else {
-        setUpdateError('An error occurred, please try again.');
+        toast.error('An error occurred, please try again.');
       }
     } catch (error) {
-      setUpdateError('An error occurred, please try again.');
+      toast.error('An error occurred, please try again.');
     } finally {
       setLoading(false);
     }
@@ -49,14 +46,6 @@ const Documents = ({ project, setProject }) => {
 
   return (
     <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
-      {isSuccess && (
-<SuccessMessage message="Documents updated successfully" />
-      )}
-      {updateError && (
-        <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
-          <p className="text-red-700">{updateError}</p>
-        </div>
-      )}
       <FileUploadField
         name="documents"
         label="Documents"

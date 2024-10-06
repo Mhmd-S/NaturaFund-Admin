@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { set, useFieldArray, useForm } from 'react-hook-form';
-
+import { toast } from 'react-toastify';
 import { faMeh, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { TableFormProps } from '@types/FormComponentsTypes';
@@ -15,7 +15,6 @@ import * as projectApi from '@api/project';
 import LoadingIcon from '@components/common/LoadingIcon';
 
 import { normalizeCamelCase } from '@utils/extractHeader';
-import SuccessMessage from '@components/common/SuccessMessage';
 
 type FormSubmitParams = {
   [key: string]: { label: string; value: string }[];
@@ -23,8 +22,6 @@ type FormSubmitParams = {
 
 const TableForm = ({ project, setProject, category, name, defaultValues }: TableFormProps) => {
   const [loading, setLoading] = useState(false);
-  const [updateError, setUpdateError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   const {
     register,
@@ -45,8 +42,6 @@ const TableForm = ({ project, setProject, category, name, defaultValues }: Table
 
   const onSubmit = async (formData: FormSubmitParams) => {
     setLoading(true);
-    setUpdateError(null);
-
     const tableData = formData[name].reduce((acc, item) => {
       acc[item.label] = item.value;
       return acc;
@@ -62,12 +57,12 @@ const TableForm = ({ project, setProject, category, name, defaultValues }: Table
 
       if (response?.status === 'success') {
         setProject(response.data);
-        setIsSuccess(true);
+        toast.success('Table updated successfully');
       } else {
-        setUpdateError('An error occurred, please try again.');
+        toast.error('An error occurred, please try again.');
       }
     } catch (error) {
-      setUpdateError('An error occurred, please try again.');
+      toast.error('An error occurred, please try again.');
     } finally {
       setLoading(false);
     }
@@ -99,12 +94,6 @@ const TableForm = ({ project, setProject, category, name, defaultValues }: Table
 
   return (
     <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
-      {isSuccess && <SuccessMessage message="Table updated successfully" />}
-      {updateError && (
-        <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
-          <p className="text-red-700">{updateError}</p>
-        </div>
-      )}
       <div className="flex flex-col gap-4 py-4">
         <div className="grid grid-cols-[50%_40%] grid-rows-1  place-items-center justify-between">
           <h3 className="w-full h-full text-4xl font-semibold text-brand-800 capitalize">

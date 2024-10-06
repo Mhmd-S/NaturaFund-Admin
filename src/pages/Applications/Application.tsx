@@ -1,6 +1,7 @@
 import { set, useForm } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import { FormWrapper, FormSelect, FormButton } from '@forms/FormComponents';
 
@@ -12,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { getApplication, updateApplication, acceptApplication } from '@api/application';
-import SuccessMessage from '@components/common/SuccessMessage';
 
 const Application = () => {
   const navigate = useNavigate();
@@ -21,8 +21,6 @@ const Application = () => {
 
   const [application, setApplication] = useState({});
   const [loading, setLoading] = useState(true);
-  const [updateError, setUpdateError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   const {
     register,
@@ -35,11 +33,10 @@ const Application = () => {
       try {
         setLoading(true);
         const response = await getApplication(id);
-        console.log(response.data);
         setApplication(response.data);
         setLoading(false);
       } catch (error) {
-        setUpdateError(error);
+        toast.error('An error occurred, please try again.');
         setLoading(false);
       }
     };
@@ -65,10 +62,10 @@ const Application = () => {
 
       if (status === 'success') {
         setApplication(data);
-        setIsSuccess(true);
+        toast.success('Application updated successfully');
       }
     } catch (error) {
-      setUpdateError(error);
+      toast.error('An error occurred, please try again.');
     }
     setLoading(false);
   };
@@ -81,9 +78,6 @@ const Application = () => {
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
       <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
-        {isSuccess && (
-          <SuccessMessage message="Application updated successfully" />
-        )}
         {loading ? (
           <LoadingIcon />
         ) : (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { set, useForm } from 'react-hook-form';
 import { Form, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { FormWrapper, FormSelect, FormButton, FormField } from '@forms/FormComponents';
 import FormFieldTextArea from '@forms/FormComponents/FormTextArea';
@@ -13,7 +14,6 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import * as userApi from '@api/user';
 import * as kycApi from '@api/kyc';
-import SuccessMessage from '@components/common/SuccessMessage';
 
 const KycDetails = () => {
   const navigate = useNavigate();
@@ -22,8 +22,6 @@ const KycDetails = () => {
   const [user, setUser] = useState(null);
   const [kyc, setKyc] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<String | null>(null);
 
   const {
     register,
@@ -45,7 +43,7 @@ const KycDetails = () => {
 
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        toast.error('An error occurred, please try again.');
         setLoading(false);
       }
     };
@@ -59,8 +57,7 @@ const KycDetails = () => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
-      setError(null);
-      console.log(data);
+
       // Update KYC status
       const kycResponse = await kycApi.updateKyc({
         _id: kyc._id,
@@ -73,12 +70,13 @@ const KycDetails = () => {
         _id: user._id,
         verified: data.verified,
       });
+
       setUser(userResponse.data);
       setKyc(kycResponse);
       setLoading(false);
-      setSuccess(true);
+      toast.success('KYC updated successfully');
     } catch (err) {
-      setError(err.message);
+      toast.error('An error occurred, please try again.');
     }
   };
 
@@ -102,7 +100,6 @@ const KycDetails = () => {
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
       <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
-        {success && <SuccessMessage message="KYC updated successfully" />}
         {loading ? (
           <LoadingIcon />
         ) : error ? (

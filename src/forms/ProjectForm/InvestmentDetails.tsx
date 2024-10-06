@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import FormWrapper from '@forms/FormComponents/FormWrapper';
 import FormTextArea from '@forms/FormComponents/FormTextArea';
@@ -7,14 +8,10 @@ import FormSelect from '@forms/FormComponents/FormSelect';
 import FormButton from '@forms/FormComponents/FormButton';
 import TableForm from '@forms/FormComponents/TablesForm';
 
-import SuccessMessage from '@components/common/SuccessMessage';
-
 import * as projectApi from '@api/project';
 
 const InvestmentDetails = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
-  const [updateError, setUpdateError] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
   const {
     register,
@@ -28,7 +25,7 @@ const InvestmentDetails = ({ project, setProject }) => {
       const investmentDetails = {
         description: formData.description,
         type: formData.type,
-        energyType: formData.energyType,  
+        energyType: formData.energyType,
         features: project?.investmentDetails?.features || [],
       };
 
@@ -40,12 +37,12 @@ const InvestmentDetails = ({ project, setProject }) => {
 
       if (status === 'success') {
         setProject(response.data);
-        setIsSuccess(true);
+        toast.success('Investment Details updated successfully');
       } else {
-        setUpdateError('An error occurred, please try again.');
+        toast.error('An error occurred, please try again.');
       }
     } catch (error) {
-      setUpdateError('An error occurred, please try again.');
+      toast.error('An error occurred, please try again.');
     } finally {
       setLoading(false);
     }
@@ -54,14 +51,6 @@ const InvestmentDetails = ({ project, setProject }) => {
   return (
     <>
       <FormWrapper onSubmit={handleSubmit(onSubmit)} loading={loading}>
-        {isSuccess && (
-          <SuccessMessage message="Investment Details updated successfully" />
-        )}
-        {updateError && (
-          <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
-            <p className="text-red-700">{updateError}</p>
-          </div>
-        )}
         <FormTextArea
           rows={5}
           name="description"
