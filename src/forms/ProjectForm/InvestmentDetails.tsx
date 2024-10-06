@@ -100,6 +100,7 @@ const InvestmentDetails = ({ project, setProject }) => {
         project={project}
         setProject={setProject}
         category="investmentDetails"
+        tip="A field for price should be added. This the field's name should be the investment type followed by 'price'. For example, if the investment type is 'Bond', the field name should be 'Bond  Price'. Do not include the currency symbol."
         name="features"
         defaultValues={project?.investmentDetails?.features || ''}
       />

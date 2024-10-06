@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import convertStorageSize from '@utils/convertStorageSize';
 
+import ToolTip from '@components/common/ToolTip';
+
 import FormFieldError from '@forms/FormComponents/FormFieldError';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,6 +28,7 @@ const FileUploadField = ({
   accept,
   register,
   errors,
+  tip,
   clearErrors,
   validationRules,
   currentFile,
@@ -95,8 +98,12 @@ const FileUploadField = ({
 
   return (
     <div className="h-fit w-full">
-      <label htmlFor={name} className="block mb-2 text-sm font-medium leading-6 text-gray-900">
+      <label
+        htmlFor={name}
+        className="flex items-center gap-3 mb-2 text-sm font-medium leading-6 text-gray-800"
+      >
         {label}
+        {tip && <ToolTip text={tip} />}
       </label>
       <div
         className={`relative h-fit w-full p-4 border rounded-md ${

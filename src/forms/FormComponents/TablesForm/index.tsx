@@ -10,6 +10,8 @@ import EmptyState from '@components/common/EmptyState';
 import FormWrapper from '@forms/FormComponents/FormWrapper';
 import TableField from '@forms/FormComponents/TablesForm/TableField';
 
+import ToolTip from '@components/common/ToolTip';
+
 import * as projectApi from '@api/project';
 
 import LoadingIcon from '@components/common/LoadingIcon';
@@ -20,7 +22,7 @@ type FormSubmitParams = {
   [key: string]: { label: string; value: string }[];
 };
 
-const TableForm = ({ project, setProject, category, name, defaultValues }: TableFormProps) => {
+const TableForm = ({ project, setProject, category, name, defaultValues, tip }: TableFormProps) => {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -95,11 +97,12 @@ const TableForm = ({ project, setProject, category, name, defaultValues }: Table
   return (
     <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-4 py-4">
-        <div className="grid grid-cols-[50%_40%] grid-rows-1  place-items-center justify-between">
-          <h3 className="w-full h-full text-4xl font-semibold text-brand-800 capitalize">
+        <div className="grid grid-cols-[50%_40%] grid-rows-1 place-items-center justify-between">
+          <h3 className="w-full h-full flex items-center gap-4 text-4xl font-semibold text-brand-800 capitalize">
             {normalizeCamelCase(name)} Table
+            {tip && <ToolTip text={tip} />}
           </h3>
-          <span className="w-full pb-4 flex justify-between items-center gap-4">
+          <span className="w-full h-full flex justify-between items-center gap-4">
             <FormButton
               type="button"
               onClick={() => append({ label: '', value: '' })}

@@ -1,6 +1,7 @@
 import React from 'react';
 import FormFieldError from '@/forms/FormComponents/FormFieldError';
 import { FormFieldProps } from '@/types/FormComponentsTypes';
+import ToolTip from '@components/common/ToolTip';
 
 const FormField = ({
   label,
@@ -8,14 +9,16 @@ const FormField = ({
   type,
   register,
   errors,
+  tip,
   validationRules,
   defaultValue,
   placeholder,
 }: FormFieldProps) => {
   return (
     <div className="w-full flex flex-col">
-      <label htmlFor={name} className="block mb-2 text-sm font-medium leading-6 text-gray-900">
+      <label htmlFor={name} className="flex items-center gap-3 mb-2 text-sm font-medium leading-6 text-gray-800">
         {label}
+        {tip && <ToolTip text={tip} />}
       </label>
 
       <input

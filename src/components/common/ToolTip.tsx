@@ -14,13 +14,21 @@ const ToolTip = ({ text }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative inline-block flex items-center">
       <FontAwesomeIcon
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         icon={faQuestionCircle}
+        className="cursor-pointer text-gray-600 text-xl"
       />
-      <span className={`absolute bg-slate-200/35`}>{text}</span>
+      <p
+        className={`absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 p-3 bg-gray-800/85 text-white text-sm font-normal rounded-lg shadow-lg transition-opacity duration-300 normal-case ${
+          displayText ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{ top: '24px' }}
+      >
+        {text}
+      </p>
     </div>
   );
 };
