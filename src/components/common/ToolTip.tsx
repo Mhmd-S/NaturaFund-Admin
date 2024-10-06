@@ -22,8 +22,8 @@ const ToolTip = ({ text }) => {
         className="cursor-pointer text-gray-600 text-xl"
       />
       <p
-        className={`absolute left-1/2 transform -translate-x-1/2 mt-2 w-48 p-3 bg-gray-800/85 text-white text-sm font-normal rounded-lg shadow-lg transition-opacity duration-300 normal-case ${
-          displayText ? 'opacity-100' : 'opacity-0'
+        className={`absolute left-1/2 transform -translate-x-1/2 mt-2 w-52 p-3 bg-gray-800/85 text-white text-sm font-normal rounded-lg shadow-lg transition-opacity duration-300 normal-case ${
+          displayText ? 'opacity-100' : 'opacity-0 sr-only'
         }`}
         style={{ top: '24px' }}
       >
