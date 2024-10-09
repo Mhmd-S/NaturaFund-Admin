@@ -63,7 +63,7 @@ const ProjectsTable = ({
         </div>
       ) : sortedData.length === 0 ? (
         <div className="w-full h-full flex items-center justify-center">
-          <EmptyState title="Nothing to display" icon={faMeh} />
+          <EmptyState title="Nothing to display" />
         </div>
       ) : (
         <table className="w-full divide-y-2 divide-gray-200 text-sm">

@@ -117,7 +117,6 @@ const TableForm = ({ project, setProject, category, name, defaultValues, tip }: 
         ) : (
           <EmptyState
             title="This table is empty! Please add a field."
-            icon={faMeh}
             handleClick={() => append({ label: '', value: '' })}
           />
         )}
