@@ -52,20 +52,14 @@ const Applications = () => {
             <p className="text-red-700">{error}</p>
           </div>
         )}
-
-        {loading ? (
-          <div className="w-full h-full bg-white rounded-lg flex items-center justify-center">
-            <LoadingIcon />
-          </div>
-        ) : (
-          <ProjectsTable
-            handleOnClick={handleOnClick}
-            data={applications}
-            acceptData={['_id', 'name', 'applicant.registeredName']}
-            projectIdField="_id"
-            searchText={searchText}
-          />
-        )}
+        <ProjectsTable
+          loading={loading}
+          handleOnClick={handleOnClick}
+          data={applications}
+          acceptData={['_id', 'name', 'applicant.registeredName']}
+          projectIdField="_id"
+          searchText={searchText}
+        />
       </div>
     </div>
   );

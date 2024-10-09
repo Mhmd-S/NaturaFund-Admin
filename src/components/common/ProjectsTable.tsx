@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faMeh } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 import { normalizeCamelCase } from '@utils/extractHeader';
 import LoadingIcon from '@components/common/LoadingIcon';
+
+import { faMeh } from '@fortawesome/free-solid-svg-icons';
 import EmptyState from '@components/common/EmptyState';
 
 type ProjectsTableProps = {
@@ -12,6 +14,7 @@ type ProjectsTableProps = {
   ignoreData?: string[];
   acceptData?: string[];
   projectIdField: string;
+  projectField: string;
   searchText: string;
   loading: boolean;
   error?: string | null;
@@ -32,12 +35,14 @@ const ProjectsTable = ({
 
   useEffect(() => {
     const filteredData = data.filter((item) =>
-      Object.values(item).some((value) =>
-        value.toString().toLowerCase().includes(searchText.toLowerCase())
+      Object.entries(item).some(
+        ([key, value]) =>
+          acceptData?.includes(key) &&
+          value.toString().toLowerCase().includes(searchText.toLowerCase())
       )
     );
     setSortedData(filteredData);
-  }, [searchText, data]);
+  }, [searchText, data, acceptData]);
 
   const handleSort = (header) => {
     const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
@@ -51,13 +56,13 @@ const ProjectsTable = ({
   };
 
   return (
-    <div className="h-full p-4 bg-white rounded-2xl">
+    <div className="min-h-screen p-4 bg-white rounded-2xl">
       {loading ? (
-        <div className="w-full h-full text-center text-gray-500 py-10">
+        <div className="text-center text-gray-500 py-10">
           <LoadingIcon />
         </div>
       ) : sortedData.length === 0 ? (
-        <div className='w-full h-full flex items-center justify-center'>
+        <div className="w-full h-full flex items-center justify-center">
           <EmptyState title="Nothing to display" icon={faMeh} />
         </div>
       ) : (
@@ -89,12 +94,11 @@ const ProjectsTable = ({
                   {Object.entries(dataEntry).map(([key, value], index) => {
                     if (ignoreData?.includes(key)) return null;
                     if (acceptData && !acceptData.includes(key)) return null;
-                    if (key === "createAt" || key === "updatedAt") {
-                      const date = new Date(value);
-                      value = date.toDateString();
+                    if (key == 'createdAt' || key == 'updatedAt') {
+                     value = value.split("T")[0]
                     }
                     return (
-                      <td key={index} className="px-4 py-2 whitespace-nowrap text-gray-900">
+                      <td key={index} className="h-[1px] px-4 py-2 whitespace-nowrap text-gray-900">
                         {value}
                       </td>
                     );

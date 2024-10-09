@@ -3,32 +3,25 @@ import { useNavigate } from 'react-router-dom';
 
 import ProjectsTable from '@components/common/ProjectsTable';
 import SearchBar from '@components/common/SearchBar';
-import LoadingIcon from '@components/common/LoadingIcon';
-import EmptyState from '@components/common/EmptyState';
 
 import * as projectApi from '@api/project';
-
-import { faMeh } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 
 const Projects = () => {
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [error, setError] = useState<String | null>(null);
-  const [stopFetching, setStopFetching] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await projectApi.getProjects(1);
         setProjects(response.data);
-        setLoading(false);
       } catch (error) {
-        setError(error);
+        toast.error("Couldn't fetch projects. Try again later.");
+      } finally {
         setLoading(false);
       }
     };
@@ -48,22 +41,15 @@ const Projects = () => {
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
           </div>
         </div>
-
-        {error && (
-          <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
-            <p className="text-red-700">{error}</p>
-          </div>
-        )}
-        
-          <ProjectsTable
-            data={projects}
-            handleOnClick={handleOnClick}
-            acceptData={['_id', 'name', 'projectStatus', 'type']}
-            projectIdField="_id"
-            searchText={searchText}
-            loading={loading}
-          />
-        
+        <ProjectsTable
+          data={projects}
+          loading={loading}
+          acceptData={["_id", "name"]}
+          projectField="project"
+          projectIdField="_id"
+          searchText={searchText}
+          handleOnClick={handleOnClick}
+        />
       </div>
     </div>
   );

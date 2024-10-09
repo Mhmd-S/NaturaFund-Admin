@@ -14,7 +14,7 @@ const ToolTip = ({ text }) => {
   };
 
   return (
-    <div className="relative inline-block flex items-center">
+    <div className="relative inline-block items-center">
       <FontAwesomeIcon
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
