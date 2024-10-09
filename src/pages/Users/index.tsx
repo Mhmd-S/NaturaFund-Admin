@@ -19,7 +19,8 @@ const Users = () => {
       try {
         setLoading(true);
         const response = await userApi.getUsers();
-        setUsers(response.data);
+        const users = response.data.filter(user => user.verified == "verified")
+        setUsers(users);
       
       } catch (error) {
         toast.error("Couldn't fetch users");
