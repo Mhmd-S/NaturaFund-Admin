@@ -68,7 +68,7 @@ const Investments = ({ userId }) => {
         data={projects}
         loading={loading}
         error={error}
-        ignoreData={['_id', 'project', 'user', 'userType', '__v', 'type', 'investmentDetails']}
+        acceptData={["name", "amount"]}
         projectField="project"
         projectIdField="_id"
         searchText={searchText}
