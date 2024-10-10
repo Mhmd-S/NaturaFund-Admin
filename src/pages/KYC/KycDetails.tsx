@@ -99,13 +99,9 @@ const KycDetails = () => {
 
   return (
     <div className="w-full overflow-y-auto p-6 bg-gray-300/20">
-      <div className="min-h-screen p-4 grid grid-cols-2 gap-3 bg-white rounded-3xl">
+      <div className="min-h-screen p-4 grid grid-cols-2 gap-6 bg-white rounded-3xl">
         {loading ? (
           <LoadingIcon />
-        ) : error ? (
-          <div className="bg-red-200 border-red-400 border-l-4 p-4 mb-4">
-            <p className="text-red-700">{error}</p>
-          </div>
         ) : (
           <>
             <h2 className="col-span-2 text-3xl py-4 font-bold sm:text-4xl flex flex-col space-y-1">
@@ -121,9 +117,6 @@ const KycDetails = () => {
                 Submitted:{' '}
                 <strong>{kyc.createdAt && new Date(kyc.createdAt).toLocaleDateString()}</strong>
               </span>
-              <span className="text-gray-600 text-sm font-normal">
-                Accuracy: <strong>{kyc.photoAccuracy}%</strong>
-              </span>
             </h2>
 
             <div className="col-span-2">
@@ -138,23 +131,53 @@ const KycDetails = () => {
               </div>
             )}
 
-            <div>
-              <h2 className="text-3xl py-4 font-semibold">Selfie Image</h2>
-              <img src={user.selfieId} alt="Selfie Image" className="object-cover object-center" />
+            <div className="col-span-2 w-full grid grid-cols-3 grid-rows-1">
+
+              <h2 className="text-3xl py-4 font-semibold col-span-3">KYC Images</h2>
+
+              <div className="flex flex-col items-center justify-center">
+                <h2 className="text-3xl py-4">Selfie Image</h2>
+                <img
+                  src={user.selfieId}
+                  alt="Selfie Image"
+                  className="object-cover object-center"
+                />
+              </div>
+
+              <h3 className="w-full text-center text-3xl place-self-center flex flex-col ">
+                Accuracy:
+                <span className="text-brand-700">
+                  <strong>{kyc.photoAccuracy}%</strong>
+                </span>
+              </h3>
+
+              <div className="flex flex-col items-center justify-center">
+                <h2 className="text-3xl py-4">Document Image</h2>
+                <img
+                  src={user.frontId}
+                  alt="Document Image"
+                  className="object-cover object-center"
+                />
+              </div>
             </div>
 
             <div>
-              <h2 className="text-3xl py-4 font-semibold">Document Image</h2>
-              <img src={user.frontId} alt="Document Image" className="object-cover object-center" />
-            </div>
-            <div>
-              <h2 className="text-3xl py-4 font-semibold">Address</h2>
+              <h2 className="text-3xl py-4 font-semibold">Proof of Address</h2>
               <img
                 src={user.addressProof}
                 alt="Document Image"
                 className="object-cover object-center"
               />
             </div>
+
+            {user.userType == 'Corporation' && (
+              <div>
+                <h2 className="text-3xl py-4 font-semibold">
+                  Business License/Incorporation Document
+                </h2>
+                <img src={user.businessLicense} className="object-cover object-center" />
+              </div>
+            )}
 
             <span className="w-full pt-4 col-span-2">
               <FormWrapper loading={loading} onSubmit={handleSubmit(onSubmit)}>
