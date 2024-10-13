@@ -56,7 +56,7 @@ const Investments = ({ userId }) => {
   };
 
   return (
-    <div className="h-screen flex flex-col gap-6">
+    <div className="min-h-screen flex flex-col gap-6">
       <div className="flex justify-between items-center p-4 bg-white rounded-2xl">
         <p className="text-lg font-bold text-brand-900">Investments</p>
         <div className="w-1/3">
