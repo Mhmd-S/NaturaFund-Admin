@@ -36,7 +36,9 @@ const UserInfo = ({ userId }) => {
       representative,
       __v,
       verified,
-      bankAccount,
+      bankName,
+      accountNumber,
+      accountName,
       suspended,
       ...rest
     } = user;

@@ -37,8 +37,8 @@ export const updateKyc = async (kycData: any) => {
     successHandler(
       { data, status },
       {
-        notifyOnSuccess: true,
-        notifyOnFailed: true,
+        notifyOnSuccess: false,
+        notifyOnFailed: false,
       }
     );
     return data;

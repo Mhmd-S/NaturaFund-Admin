@@ -90,6 +90,8 @@ const KycDetails = () => {
       updatedAt,
       addressProof,
       representative,
+      bankAccount,
+      suspended,
       __v,
       verified,
       ...rest

@@ -82,7 +82,7 @@ export const updateProject = async (id: string, projectData: unknown) => {
     successHandler(
       { data, status },
       {
-        notifyOnSuccess: true,
+        notifyOnSuccess: false,
         notifyOnFailed: true,
       }
     );
