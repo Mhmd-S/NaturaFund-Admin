@@ -10,7 +10,7 @@ const DetailsTable = ({ title, items }: DetailsTableProps) => {
   const isEmpty = Object.keys(items).length === 0;
 
   return (
-    <div className="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
+    <div className="flow-root w-full rounded-lg border border-gray-100 py-3 shadow-sm">
       {title && (
         <h4 className="w-full mb-2 pb-3 text-xl text-center font-bold border-b-[1px]">{title}</h4>
       )}
@@ -23,7 +23,7 @@ const DetailsTable = ({ title, items }: DetailsTableProps) => {
               key={index}
               className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
             >
-              <dt className="font-medium text-gray-900 capitalize">{normalizeCamelCase(key)}</dt>
+              <dt className="font-bold text-gray-900 capitalize">{normalizeCamelCase(key)}</dt>
               <dd className="text-gray-700 sm:col-span-2 overflow-hidden">{value}</dd>
             </div>
           ))}

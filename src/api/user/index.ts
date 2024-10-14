@@ -28,7 +28,7 @@ export const updateUser = async (updateData) => {
     const response = await api.request({
       method: 'PUT',
       url: `user/${updateData._id}`,
-      data: { verified: updateData.verified},
+      data: { verified: updateData.verified },
     });
 
     const { status, data } = response;
@@ -85,5 +85,26 @@ export const getUsers = async () => {
     return data;
   } catch (error) {
     return errorHandler(error);
+  }
+};
+
+export const suspendUser = async (id) => {
+  try {
+    const response = await api.request({
+      method: 'PUT',
+      url: `user/suspend/${id}`,
+    });
+
+    const { status, data } = response;
+    successHandler(
+      { data, status },
+      {
+        notifyOnSuccess: true,
+        notifyOnFailed: true,
+      }
+    );
+    return data;
+  } catch (err) {
+    return errorHandler(err);
   }
 };

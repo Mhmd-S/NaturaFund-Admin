@@ -5,6 +5,18 @@ export const api = axios.create({
     withCredentials: true,
 });
 
+// Allowing download from S3 bucket
+export const s3Api = axios.create({
+    baseURL: "https://your-s3-bucket-url",
+    responseType: 'blob', // This is important for downloading files
+    headers: {
+        "Content-Type": "application/octet-stream",
+        "referrer-policy": "origin-when-cross-origin",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+    }
+});
+
 // // defining a custom error handler for all APIs
 // const errorHandler = (error) => {
 //     const statusCode = error.response?.status;

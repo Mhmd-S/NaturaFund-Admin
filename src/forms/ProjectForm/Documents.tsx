@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import FileUploadField from '@forms/FormComponents/FormMultiFileUpload';
 import FormWrapper from '@forms/FormComponents/FormWrapper';
 import FormButton from '@forms/FormComponents/FormButton';
-
 import * as projectApi from '@api/project';
- import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Documents = ({ project, setProject }) => {
   const [loading, setLoading] = useState(false);
@@ -13,6 +12,8 @@ const Documents = ({ project, setProject }) => {
   const {
     register,
     handleSubmit,
+    setValue,
+    resetField,
     formState: { errors },
   } = useForm();
 
@@ -54,8 +55,10 @@ const Documents = ({ project, setProject }) => {
         acceptSize={200000}
         register={register}
         errors={errors}
+        setValue={setValue}
+        resetField={resetField}
         validationRules={{
-          required: 'Legal documents are required',
+          required: 'Documents are required',
         }}
         defaultFiles={project.documents}
       />

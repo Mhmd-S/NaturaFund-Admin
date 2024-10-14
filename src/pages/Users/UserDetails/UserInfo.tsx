@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 import DetailsTable from '@components/common/DetailsTable';
 
-import { getUser } from '@api/user';
+import { getUser, suspendUser } from '@api/user';
 import LoadingIcon from '@components/common/LoadingIcon';
 
+
 const UserInfo = ({ userId }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        setLoading(true);
         const response = await getUser(userId);
         setUser(response.data);
       } catch (error) {
@@ -22,7 +22,7 @@ const UserInfo = ({ userId }) => {
       }
     };
     fetchUser();
-  }, []);
+  }, [loading]);
 
   const userItems = () => {
     const {
@@ -36,15 +36,22 @@ const UserInfo = ({ userId }) => {
       representative,
       __v,
       verified,
+      bankAccount,
+      suspended,
       ...rest
     } = user;
     return rest;
   };
 
+  const handleSuspendUser = () => {
+    setLoading(true);
+    suspendUser(userId).finally(() => setLoading(false));
+  };
+
   return (
-    <div>
+    <>
       {loading ? (
-        <div>
+        <div className="w-full h-full flex justify-center items-center">
           <LoadingIcon />
         </div>
       ) : (
@@ -52,13 +59,18 @@ const UserInfo = ({ userId }) => {
           <DetailsTable title="User Details" items={userItems()} />
 
           {user.userType == 'Corporation' && (
-            <div className="col-span-2">
-              <DetailsTable title="Representative Details" items={JSON.parse(user.representative)} />
-            </div>
+            <DetailsTable title="Representative Details" items={JSON.parse(user.representative)} />
           )}
+          <button
+            className="align-self-center justify-self-center my-2 border-2 border-red-600 bg-red-600 p-4 rounded-xl text-white hover:bg-white hover:text-red-600"
+            onClick={handleSuspendUser}
+            type='button'
+          >
+            {user.suspended ? 'Unsuspend User' : 'Suspend User'}
+          </button>
         </>
       )}
-    </div>
+    </>
   );
 };
 
