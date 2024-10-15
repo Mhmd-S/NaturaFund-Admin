@@ -31,7 +31,9 @@ const TableForm = ({ project, setProject, category, name, defaultValues, tip }: 
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -44,10 +46,10 @@ const TableForm = ({ project, setProject, category, name, defaultValues, tip }: 
 
   const onSubmit = async (formData: FormSubmitParams) => {
     setLoading(true);
-    const tableData = formData[name].reduce((acc, item) => {
+    const tableData = formData[name]?.reduce((acc, item) => {
       acc[item.label] = item.value;
       return acc;
-    }, {});
+    }, {}) || {};
 
     const objectToSend = {
       ...project[category],
